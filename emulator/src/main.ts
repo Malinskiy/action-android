@@ -16,6 +16,7 @@ async function run() {
 
     const androidHome = process.env.ANDROID_HOME
     console.log(`ANDROID_HOME is ${androidHome}`)
+    console.log(`PATH is ${process.env.PATH}`)
 
     await exec.exec(`${androidHome}/tools/bin/sdkmanager "system-images;android-${api};${tag};${abi}" --verbose`);
   } catch (error) {
