@@ -16,7 +16,7 @@ let writeFileAsync = util.promisify(writeFile)
 export default async function installAndroidSdk(): Promise<boolean> {
     const ANDROID_HOME = androidHome()
 
-    await execWithResult(`mv ${process.env.HOME}/.android ${process.env.HOME}/.android.backup || true`)
+    await execWithResult(`bash -c \\\"mv ${process.env.HOME}/.android ${process.env.HOME}/.android.backup || true\\\"`)
     await execWithResult(`curl -L ${URL_LINUX} -o ${ANDROID_TMP_PATH} -s`)
     await execWithResult(`unzip -q ${ANDROID_TMP_PATH} -d ${ANDROID_HOME}`)
     await execWithResult(`rm ${ANDROID_TMP_PATH}`)
