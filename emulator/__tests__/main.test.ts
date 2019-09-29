@@ -21,3 +21,6 @@ import installAndroidSdk from "../src/sdk";
 // test('test installAndroidSdk', () => {
 //     console.assert(installAndroidSdk())
 // })
+
+test('ignore', () =>{
+})
