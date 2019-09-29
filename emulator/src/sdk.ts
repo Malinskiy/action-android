@@ -2,9 +2,13 @@ import * as core from "@actions/core";
 import execWithResult from "./exec-with-result";
 import * as fs from "fs";
 import * as path from "path";
+import {writeFile} from "fs";
+import * as util from "util";
 
 const URL_LINUX = "https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip"
 const ANDROID_TMP_PATH = "/tmp/android-sdk.zip"
+
+let writeFileAsync = util.promisify(writeFile)
 
 /**
  * Assuming that we will only run on Linux for now
@@ -43,5 +47,5 @@ export async function acceptLicenses() {
 }
 
 async function writeLicenseFile(file: string, content: string) {
-    await fs.writeFile.__promisify__(file, content)
+    await writeFileAsync(file, content)
 }
