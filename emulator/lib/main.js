@@ -21,6 +21,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const core = __importStar(require("@actions/core"));
 const exec_with_result_1 = __importDefault(require("./exec-with-result"));
+const fs = __importStar(require("fs"));
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -35,8 +36,16 @@ function run() {
             const androidHome = process.env.ANDROID_HOME;
             console.log(`ANDROID_HOME is ${androidHome}`);
             console.log(`PATH is ${process.env.PATH}`);
-            let output = exec_with_result_1.default(`${androidHome}/tools/bin/sdkmanager "system-images;android-${api};${tag};${abi}" --verbose`);
-            console.log(`${output}`);
+            const sdkmanager = "${androidHome}/tools/bin/sdkmanager";
+            try {
+                if (fs.existsSync(sdkmanager)) {
+                    let output = exec_with_result_1.default(``, [`system-images;android-${api};${tag};${abi}`, "--verbose"]);
+                    console.log(`${output}`);
+                }
+            }
+            catch (err) {
+                console.error(err);
+            }
         }
         catch (error) {
             core.setFailed(error.message);

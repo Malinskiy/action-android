@@ -1,5 +1,6 @@
 import * as core from '@actions/core';
 import execWithResult from './exec-with-result'
+import * as fs from "fs";
 
 async function run() {
   try {
@@ -18,8 +19,16 @@ async function run() {
     console.log(`ANDROID_HOME is ${androidHome}`)
     console.log(`PATH is ${process.env.PATH}`)
 
-    let output = execWithResult(`${androidHome}/tools/bin/sdkmanager "system-images;android-${api};${tag};${abi}" --verbose`);
-    console.log(`${output}`)
+    const sdkmanager = "${androidHome}/tools/bin/sdkmanager"
+
+    try {
+      if (fs.existsSync(sdkmanager)) {
+        let output = execWithResult(``, [`system-images;android-${api};${tag};${abi}`, "--verbose"]);
+        console.log(`${output}`)
+      }
+    } catch(err) {
+      console.error(err)
+    }
   } catch (error) {
     core.setFailed(error.message);
   }
