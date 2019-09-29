@@ -15,10 +15,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
-    - run: cd emulator
     - run: npm ci
+      working-directory: emulator
     - run: npm run build
+      working-directory: emulator
     - run: npm test
+      working-directory: emulator
     - uses: ./emulator
       with:
         milliseconds: 1000
