@@ -43,8 +43,9 @@ function run() {
                     console.log(`${output}`);
                 }
             }
-            catch (err) {
-                console.error(err);
+            catch (error) {
+                console.error(error);
+                core.setFailed(error.message);
             }
         }
         catch (error) {

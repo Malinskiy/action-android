@@ -26,8 +26,9 @@ async function run() {
         let output = execWithResult(``, [`system-images;android-${api};${tag};${abi}`, "--verbose"]);
         console.log(`${output}`)
       }
-    } catch(err) {
-      console.error(err)
+    } catch(error) {
+      console.error(error)
+      core.setFailed(error.message);
     }
   } catch (error) {
     core.setFailed(error.message);
