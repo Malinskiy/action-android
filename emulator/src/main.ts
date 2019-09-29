@@ -2,6 +2,7 @@ import * as core from '@actions/core';
 import execWithResult from './exec-with-result'
 import * as fs from "fs";
 import {InputOptions} from "@actions/core/lib/core";
+import installAndroidSdk from "./sdk";
 
 async function run() {
     try {
@@ -22,6 +23,9 @@ async function run() {
             console.log(`Unknown tag ${tag}. Using default`)
             tag = 'default'
         }
+
+        console.log("Installing Android SDK")
+        await installAndroidSdk()
 
         console.log(`Starting emulator with API=${api}, TAG=${tag} and ABI=${abi}...`)
 
