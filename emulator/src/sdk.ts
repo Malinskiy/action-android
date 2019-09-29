@@ -1,5 +1,6 @@
 import * as core from "@actions/core";
 import execWithResult from "./exec-with-result";
+import * as fs from "fs";
 
 const URL_LINUX = "https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip"
 const ANDROID_TMP_PATH = "/tmp/android-sdk.zip"
@@ -28,5 +29,13 @@ export function androidHome(): string {
 }
 
 export async function acceptLicenses() {
-    await execWithResult(`yes | ${androidHome()}/tools/bin/sdkmanager --licenses`)
+    fs.writeFileSync(`${androidHome()}/licenses/android-sdk-license`, "8933bad161af4178b1185d1a37fbf41ea5269c55\n" +
+        "d56f5187479451eabf01fb78af6dfcb131a6481e\n" +
+        "24333f8a63b6825ea9c5514f83c2829b004d1fee")
+
+    fs.writeFileSync(`${androidHome()}/licenses/android-sdk-preview-license`, "84831b9409646a918e30573bab4c9c91346d8abd\n")
+    fs.writeFileSync(`${androidHome()}/licenses/intel-android-extra-license`, "d975f751698a77b662f1254ddbeed3901e976f5a\n")
+    fs.writeFileSync(`${androidHome()}/licenses/mips-android-sysimage-license`, "e9acab5b5fbb560a72cfaecce8946896ff6aab9d\n")
+    fs.writeFileSync(`${androidHome()}/licenses/google-gdk-license`, "33b6a2b64607f11b759f320ef9dff4ae5c47d97a\n")
+    fs.writeFileSync(`${androidHome()}/licenses/android-googletv-license`, "601085b94cd77f0b54ff86406957099ebe79c4d6\n")
 }
