@@ -14,6 +14,10 @@ export async function startEmulator(name: string): Promise<boolean> {
     return await waitForBoot()
 }
 
+export async function listEmulators(): Promise<string> {
+    return await execWithResult(`${androidHome()}/tools/emulator -list-avds`)
+}
+
 async function waitForBoot(): Promise<boolean> {
     let countdown = 120
     while (await execWithResult(`${androidHome()}/platform-tools/adb shell getprop sys.boot_completed | tr -d '\r' `) !== '1') {
