@@ -1,5 +1,4 @@
 import execWithResult from "./exec-with-result";
-import * as sleep from "sleep"
 
 export async function installEmulatorPackage(api: string, tag: string, abi: string): Promise<any> {
     await execWithResult(`sdkmanager`, [`system-images;android-${api};${tag};${abi}`, "--verbose"]);
@@ -21,9 +20,12 @@ async function waitForBoot(): Promise<boolean> {
             console.error("Timeout waiting for the emulator")
             return false
         }
-        sleep(1)
+        await sleep(1000)
         countdown--
     }
     return true
 }
 
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
