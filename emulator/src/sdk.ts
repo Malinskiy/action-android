@@ -28,5 +28,5 @@ export function androidHome(): string {
 }
 
 export async function acceptLicenses() {
-    await execWithResult(`yes | sdkmanager --licenses`)
+    await execWithResult(`yes | ${androidHome()}/tools/bin/sdkmanager --licenses`)
 }
