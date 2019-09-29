@@ -26,3 +26,7 @@ export default async function installAndroidSdk(): Promise<boolean> {
 export function androidHome(): string {
     return `${process.env.HOME}/android-sdk`
 }
+
+export async function acceptLicenses() {
+    await execWithResult(`yes | sdkmanager --licenses`)
+}

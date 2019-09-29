@@ -2,7 +2,7 @@ import * as core from '@actions/core';
 import execWithResult from './exec-with-result'
 import * as fs from "fs";
 import {InputOptions} from "@actions/core/lib/core";
-import installAndroidSdk from "./sdk";
+import installAndroidSdk, {acceptLicenses} from "./sdk";
 import {installEmulatorPackage, startEmulator} from "./emulator";
 import {createEmulator} from "./emulator";
 
@@ -26,8 +26,15 @@ async function run() {
             tag = 'default'
         }
 
+        let acceptLicense = core.getInput('acceptLicense')
+        if (acceptLicense !== "yes") {
+            core.setFailed('You can\'t use this unless you accept the Android SDK licenses')
+            return
+        }
+
         console.log("Installing Android SDK")
         await installAndroidSdk()
+        await acceptLicenses()
 
         console.log(`Starting emulator with API=${api}, TAG=${tag} and ABI=${abi}...`)
 
@@ -42,9 +49,11 @@ async function run() {
         } catch (error) {
             console.error(error)
             core.setFailed(error.message);
+            return
         }
     } catch (error) {
         core.setFailed(error.message);
+        return
     }
 }
 
