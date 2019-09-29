@@ -42,6 +42,9 @@ function run() {
                     let output = exec_with_result_1.default(``, [`system-images;android-${api};${tag};${abi}`, "--verbose"]);
                     console.log(`${output}`);
                 }
+                else {
+                    core.setFailed("sdkmanager binary is missing");
+                }
             }
             catch (error) {
                 console.error(error);

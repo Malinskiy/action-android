@@ -25,6 +25,8 @@ async function run() {
       if (fs.existsSync(sdkmanager)) {
         let output = execWithResult(``, [`system-images;android-${api};${tag};${abi}`, "--verbose"]);
         console.log(`${output}`)
+      } else {
+        core.setFailed("sdkmanager binary is missing")
       }
     } catch(error) {
       console.error(error)
