@@ -34,6 +34,7 @@ export async function acceptLicenses() {
         "d56f5187479451eabf01fb78af6dfcb131a6481e\n" +
         "24333f8a63b6825ea9c5514f83c2829b004d1fee")
 
+    await execWithResult(`mkdir -p ${androidHome()}/licenses`)
     await writeLicenseFile(`${androidHome()}/licenses/android-sdk-preview-license`, "84831b9409646a918e30573bab4c9c91346d8abd\n")
     await writeLicenseFile(`${androidHome()}/licenses/intel-android-extra-license`, "d975f751698a77b662f1254ddbeed3901e976f5a\n")
     await writeLicenseFile(`${androidHome()}/licenses/mips-android-sysimage-license`, "e9acab5b5fbb560a72cfaecce8946896ff6aab9d\n")
@@ -42,7 +43,5 @@ export async function acceptLicenses() {
 }
 
 async function writeLicenseFile(file: string, content: string) {
-    let dir = path.dirname(file);
-    await execWithResult(`mkdir -p ${dir}`)
     fs.writeFileSync(file, content)
 }
