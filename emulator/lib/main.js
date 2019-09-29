@@ -25,9 +25,17 @@ const fs = __importStar(require("fs"));
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const api = core.getInput('api');
-            const abi = core.getInput('abi');
-            let tag = core.getInput('tag');
+            let api = core.getInput('api', { required: false });
+            if (api == null || api == "") {
+                console.log(`API not set. Using 25`);
+                api = '25';
+            }
+            let abi = core.getInput('abi', { required: false });
+            if (abi == null || abi == "") {
+                console.log(`ABI not set. Using x86`);
+                abi = 'x86';
+            }
+            let tag = core.getInput('tag', { required: false });
             if (tag !== "default" && tag !== "google_apis") {
                 console.log(`Unknown tag ${tag}. Using default`);
                 tag = 'default';
@@ -36,10 +44,10 @@ function run() {
             const androidHome = process.env.ANDROID_HOME;
             console.log(`ANDROID_HOME is ${androidHome}`);
             console.log(`PATH is ${process.env.PATH}`);
-            const sdkmanager = "${androidHome}/tools/bin/sdkmanager";
+            const sdkmanager = `${androidHome}/tools/bin/sdkmanager`;
             try {
                 if (fs.existsSync(sdkmanager)) {
-                    let output = exec_with_result_1.default(``, [`system-images;android-${api};${tag};${abi}`, "--verbose"]);
+                    let output = exec_with_result_1.default(`${sdkmanager}`, [`system-images;android-${api};${tag};${abi}`, "--verbose"]);
                     console.log(`${output}`);
                 }
                 else {
