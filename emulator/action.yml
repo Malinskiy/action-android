@@ -8,6 +8,9 @@ inputs:
   abi:
     description: 'abi of the emulator'
     default: 'x86'
+  tag:
+    description: 'default or google_apis'
+    default: 'default'
 runs:
   using: 'node12'
   main: 'lib/main.js'

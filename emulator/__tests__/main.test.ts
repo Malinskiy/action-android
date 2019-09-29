@@ -6,6 +6,7 @@ import * as path from 'path'
 test('test runs', () => {
     process.env['INPUT_ABI'] = 'x86';
     process.env['INPUT_API'] = '25';
+    process.env['INPUT_TAG'] = 'default';
     const ip = path.join(__dirname, '..', 'lib', 'main.js');
     console.log(cp.execSync(`node ${ip}`).toString());
 })

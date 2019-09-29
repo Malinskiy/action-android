@@ -17,12 +17,19 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const core = __importStar(require("@actions/core"));
+const exec = __importStar(require("@actions/exec"));
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const api = core.getInput('api');
             const abi = core.getInput('abi');
-            console.log(`Starting emulator with API=${api} and ABI=${abi}...`);
+            let tag = core.getInput('tag');
+            if (tag !== "default" && tag !== "google_apis") {
+                console.log(`Unknown tag ${tag}. Using default`);
+                tag = 'default';
+            }
+            console.log(`Starting emulator with API=${api}, TAG=${tag} and ABI=${abi}...`);
+            yield exec.exec(`sdkmanager "system-images;android-${api};${tag};${abi}"`);
         }
         catch (error) {
             core.setFailed(error.message);
