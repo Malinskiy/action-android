@@ -29,7 +29,7 @@ function run() {
                 tag = 'default';
             }
             console.log(`Starting emulator with API=${api}, TAG=${tag} and ABI=${abi}...`);
-            yield exec.exec(`sdkmanager "system-images;android-${api};${tag};${abi}"`);
+            yield exec.exec(`sdkmanager "system-images;android-${api};${tag};${abi}" --verbose`);
         }
         catch (error) {
             core.setFailed(error.message);
