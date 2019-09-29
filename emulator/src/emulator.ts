@@ -6,7 +6,7 @@ export async function installEmulatorPackage(api: string, tag: string, abi: stri
 }
 
 export async function createEmulator(name: string, api: string, tag: string, abi: string): Promise<any> {
-    await execWithResult(`echo no | ${androidHome()}/tools/bin/avdmanager create avd -n "${name}" --package "system-images;android-${api};${tag};${abi}" --tag ${tag}`)
+    await execWithResult(`no | ${androidHome()}/tools/bin/avdmanager create avd -n "${name}" --package "system-images;android-${api};${tag};${abi}" --tag ${tag}`)
 }
 
 export async function startEmulator(name: string): Promise<boolean> {
