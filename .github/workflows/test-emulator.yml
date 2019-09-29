@@ -1,0 +1,24 @@
+name: "Test typescript-action"
+on:
+  pull_request:
+  push:
+    paths:
+    - 'emulator/*'
+    - 'emulator/*/*'
+    - 'emulator/*/*/*'
+    branches:
+      - master
+      - 'releases/*'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - run: cd emulator
+    - run: npm ci
+    - run: npm run build
+    - run: npm test
+    - uses: ./emulator
+      with:
+        milliseconds: 1000
