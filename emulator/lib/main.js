@@ -15,9 +15,12 @@ var __importStar = (this && this.__importStar) || function (mod) {
     result["default"] = mod;
     return result;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const core = __importStar(require("@actions/core"));
-const exec = __importStar(require("@actions/exec"));
+const exec_with_result_1 = __importDefault(require("./exec-with-result"));
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -29,7 +32,11 @@ function run() {
                 tag = 'default';
             }
             console.log(`Starting emulator with API=${api}, TAG=${tag} and ABI=${abi}...`);
-            yield exec.exec(`sdkmanager "system-images;android-${api};${tag};${abi}" --verbose`);
+            const androidHome = process.env.ANDROID_HOME;
+            console.log(`ANDROID_HOME is ${androidHome}`);
+            console.log(`PATH is ${process.env.PATH}`);
+            let output = exec_with_result_1.default(`${androidHome}/tools/bin/sdkmanager "system-images;android-${api};${tag};${abi}" --verbose`);
+            console.log(`${output}`);
         }
         catch (error) {
             core.setFailed(error.message);

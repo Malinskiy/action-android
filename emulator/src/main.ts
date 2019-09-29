@@ -1,5 +1,5 @@
 import * as core from '@actions/core';
-import * as exec from '@actions/exec'
+import execWithResult from './exec-with-result'
 
 async function run() {
   try {
@@ -18,7 +18,8 @@ async function run() {
     console.log(`ANDROID_HOME is ${androidHome}`)
     console.log(`PATH is ${process.env.PATH}`)
 
-    await exec.exec(`${androidHome}/tools/bin/sdkmanager "system-images;android-${api};${tag};${abi}" --verbose`);
+    let output = execWithResult(`${androidHome}/tools/bin/sdkmanager "system-images;android-${api};${tag};${abi}" --verbose`);
+    console.log(`${output}`)
   } catch (error) {
     core.setFailed(error.message);
   }
