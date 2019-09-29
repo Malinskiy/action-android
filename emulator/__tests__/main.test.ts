@@ -8,5 +8,11 @@ test('test runs', () => {
     process.env['INPUT_API'] = '25';
     process.env['INPUT_TAG'] = 'default';
     const ip = path.join(__dirname, '..', 'lib', 'main.js');
-    console.log(cp.execSync(`node ${ip}`).toString());
+
+    try {
+        let result = cp.execSync(`node ${ip}`);
+        console.log(result.toString());
+    } catch (e) {
+        console.log(e.message)
+    }
 })
