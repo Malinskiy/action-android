@@ -21,6 +21,7 @@ export default async function installAndroidSdk(): Promise<boolean> {
     await execWithResult(`rm ${ANDROID_TMP_PATH}`)
 
     core.exportVariable('ANDROID_HOME', `${ANDROID_HOME}`);
+    core.exportVariable('ANDROID_SDK_ROOT', `${ANDROID_HOME}`);
 
     const PATH = process.env.PATH
     let extraPaths = `${ANDROID_HOME}/bin:${ANDROID_HOME}/tools:${PATH}/tools/bin:${PATH}/platform-tools/bin`
