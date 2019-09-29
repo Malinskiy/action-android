@@ -3,6 +3,8 @@ import execWithResult from './exec-with-result'
 import * as fs from "fs";
 import {InputOptions} from "@actions/core/lib/core";
 import installAndroidSdk from "./sdk";
+import {installEmulatorPackage, startEmulator} from "./emulator";
+import {createEmulator} from "./emulator";
 
 async function run() {
     try {
@@ -33,15 +35,10 @@ async function run() {
         console.log(`ANDROID_HOME is ${androidHome}`)
         console.log(`PATH is ${process.env.PATH}`)
 
-        const sdkmanager = `${androidHome}/tools/bin/sdkmanager`
-
         try {
-            if (fs.existsSync(sdkmanager)) {
-                let output = execWithResult(`${sdkmanager}`, [`system-images;android-${api};${tag};${abi}`, "--verbose"]);
-                console.log(`${output}`)
-            } else {
-                core.setFailed("sdkmanager binary is missing")
-            }
+            installEmulatorPackage(api, tag, abi)
+            createEmulator("emulator", api, tag, abi)
+            startEmulator("emulator")
         } catch (error) {
             console.error(error)
             core.setFailed(error.message);
