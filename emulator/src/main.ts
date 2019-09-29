@@ -36,9 +36,9 @@ async function run() {
         console.log(`PATH is ${process.env.PATH}`)
 
         try {
-            installEmulatorPackage(api, tag, abi)
-            createEmulator("emulator", api, tag, abi)
-            startEmulator("emulator")
+            await installEmulatorPackage(api, tag, abi)
+            await createEmulator("emulator", api, tag, abi)
+            await startEmulator("emulator")
         } catch (error) {
             console.error(error)
             core.setFailed(error.message);
