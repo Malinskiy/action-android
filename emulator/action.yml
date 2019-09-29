@@ -1,10 +1,13 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: 'Android Emulator Action'
+description: 'Starts Android emulator via existing Android SDK installation'
+author: 'Malinskiy'
 inputs:
-  myInput:              # change this
-    description: 'input description here'
-    default: 'default value if applicable'
+  api:
+    description: 'api version of the emulator'
+    default: '25'
+  abi:
+    description: 'abi of the emulator'
+    default: 'x86'
 runs:
   using: 'node12'
   main: 'lib/main.js'

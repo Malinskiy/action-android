@@ -23,4 +23,5 @@ jobs:
       working-directory: emulator
     - uses: ./emulator
       with:
-        milliseconds: 1000
+        api: 26
+        abi: x86

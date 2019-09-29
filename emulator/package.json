@@ -1,8 +1,8 @@
 {
-  "name": "typescript-action",
+  "name": "android-action",
   "version": "0.0.0",
   "private": true,
-  "description": "TypeScript template action",
+  "description": "Android GitHub Actions",
   "main": "lib/main.js",
   "scripts": {
     "build": "tsc",
@@ -10,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/actions/typescript-action.git"
+    "url": "git+https://github.com/Malinskiy/action-android.git"
   },
   "keywords": [
     "actions",
     "node",
     "setup"
   ],
-  "author": "YourNameOrOrganization",
+  "author": "Malinskiy",
   "license": "MIT",
   "dependencies": {
     "@actions/core": "^1.0.0"

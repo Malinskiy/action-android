@@ -1,16 +1,10 @@
 import * as core from '@actions/core';
-import {wait} from './wait'
 
 async function run() {
   try {
-    const ms = core.getInput('milliseconds');
-    console.log(`Waiting ${ms} milliseconds ...`)
-
-    core.debug((new Date()).toTimeString())
-    await wait(parseInt(ms));
-    core.debug((new Date()).toTimeString())
-
-    core.setOutput('time', new Date().toTimeString());
+    const api = core.getInput('api');
+    const abi = core.getInput('abi');
+    console.log(`Starting emulator with API=${api} and ABI=${abi}...`)
   } catch (error) {
     core.setFailed(error.message);
   }

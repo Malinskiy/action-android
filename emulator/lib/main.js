@@ -17,16 +17,12 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const core = __importStar(require("@actions/core"));
-const wait_1 = require("./wait");
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const ms = core.getInput('milliseconds');
-            console.log(`Waiting ${ms} milliseconds ...`);
-            core.debug((new Date()).toTimeString());
-            yield wait_1.wait(parseInt(ms));
-            core.debug((new Date()).toTimeString());
-            core.setOutput('time', new Date().toTimeString());
+            const api = core.getInput('api');
+            const abi = core.getInput('abi');
+            console.log(`Starting emulator with API=${api} and ABI=${abi}...`);
         }
         catch (error) {
             core.setFailed(error.message);
