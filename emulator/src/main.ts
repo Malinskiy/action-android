@@ -16,8 +16,8 @@ async function run() {
 
         let abi = core.getInput('abi', <InputOptions>{required: false});
         if (abi == null || abi == "") {
-            console.log(`ABI not set. Using x86`)
-            abi = 'x86'
+            console.log(`ABI not set. Using armeabi-v7a`)
+            abi = 'armeabi-v7a'
         }
 
         let tag = core.getInput('tag', <InputOptions>{required: false})
