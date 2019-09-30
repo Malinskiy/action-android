@@ -11,8 +11,12 @@ export async function createEmulator(name: string, api: string, tag: string, abi
 }
 
 export async function verifyHardwareAcceleration(): Promise<boolean> {
-    let exitCode = await exec(`${androidHome()}/tools/emulator -accel-check`);
-    return exitCode == 0
+    try {
+        let exitCode = await exec(`${androidHome()}/tools/emulator -accel-check`);
+        return exitCode == 0
+    } catch (e) {
+        return false
+    }
 }
 
 export async function startEmulator(name: string): Promise<any> {
