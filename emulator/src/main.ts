@@ -3,7 +3,7 @@ import execWithResult from './exec-with-result'
 import * as fs from "fs";
 import {InputOptions} from "@actions/core/lib/core";
 import installAndroidSdk, {acceptLicenses} from "./sdk";
-import {installEmulatorPackage, listEmulators, startEmulator} from "./emulator";
+import {installEmulatorPackage, listEmulators, startEmulator, verifyHardwareAcceleration} from "./emulator";
 import {createEmulator} from "./emulator";
 
 async function run() {
@@ -44,6 +44,13 @@ async function run() {
 
         try {
             await installEmulatorPackage(api, tag, abi)
+
+            let supportsHardwareAcceleration = await verifyHardwareAcceleration();
+            if (!supportsHardwareAcceleration && abi == "x86") {
+                core.setFailed('Hardware acceleration is not supported')
+                return
+            }
+
             await createEmulator("emulator", api, tag, abi)
 
             console.log(`Available emulators: ${await listEmulators()}`)
