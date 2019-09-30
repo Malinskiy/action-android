@@ -16,7 +16,7 @@ export async function verifyHardwareAcceleration(): Promise<boolean> {
 }
 
 export async function startEmulator(name: string): Promise<any> {
-    await execWithResult(`${androidHome()}/tools/emulator @name`)
+    await execWithResult(`${androidHome()}/tools/emulator-headless @name &`)
     return await waitForBoot()
 }
 

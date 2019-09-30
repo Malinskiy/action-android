@@ -46,10 +46,10 @@ async function run() {
             await installEmulatorPackage(api, tag, abi)
 
             let supportsHardwareAcceleration = await verifyHardwareAcceleration();
-            if (!supportsHardwareAcceleration && abi == "x86") {
-                core.setFailed('Hardware acceleration is not supported')
-                return
-            }
+            // if (!supportsHardwareAcceleration && abi == "x86") {
+            //     core.setFailed('Hardware acceleration is not supported')
+            //     return
+            // }
 
             await createEmulator("emulator", api, tag, abi)
 
