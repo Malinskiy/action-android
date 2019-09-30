@@ -24,4 +24,5 @@ jobs:
     - uses: ./emulator
       with:
         api: 25
+        tag: google_apis
         abi: armeabi-v7a
