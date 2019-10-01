@@ -1,6 +1,7 @@
 import * as core from '@actions/core';
 import {InputOptions} from "@actions/core/lib/core";
 import {SdkFactory} from "./sdk";
+import execWithResult from "./exec-with-result";
 
 async function run() {
     try {
@@ -51,6 +52,8 @@ async function run() {
 
             let emulator = await sdk.createEmulator("emulator", api, tag, abi);
             await sdk.listEmulators()
+
+            await execWithResult('find $ANDROID_SDK_HOME')
 
             await emulator.start()
         } catch (error) {
