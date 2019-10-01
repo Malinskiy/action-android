@@ -5,9 +5,7 @@ jobs:
     runs-on: macOS-10.14
     steps:
     - uses: actions/checkout@v1
-    - run: env
-    - run: npm config delete prefix && source ~/.nvm/nvm.sh && nvm use v12.10.0
-    - run: npm install && npm ci && npm run build || cat /Users/runner/.npm/_logs/*.log
+    - run: npm config delete prefix && source ~/.nvm/nvm.sh && nvm use v12.10.0 && npm install && npm ci && npm run build
       working-directory: emulator
       env:
         PATH: "/usr/local/opt/node@10/bin:$PATH"
