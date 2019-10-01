@@ -6,14 +6,10 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - run: brew install node@10
-    - run: npm ci
+    - run: npm install && npm ci && npm run build
       working-directory: emulator
       env:
         PATH: "/usr/local/opt/node@10/bin:$PATH"
-    - run: npm run build
-      env:
-        PATH: "/usr/local/opt/node@10/bin:$PATH"
-      working-directory: emulator
     - uses: ./emulator
       with:
         api: 25
