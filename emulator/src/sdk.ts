@@ -35,7 +35,7 @@ abstract class BaseAndroidSdk implements AndroidSDK {
         const ANDROID_HOME = this.androidHome()
 
         if (fs.existsSync(`${process.env.HOME}/.android`)) {
-            await execWithResult(`mv  ${process.env.HOME}/.android.backup`)
+            await execWithResult(`mv ${process.env.HOME}/.android ${process.env.HOME}/.android.backup`)
         }
 
         await execWithResult(`curl -L ${this.sdkUrl} -o ${ANDROID_TMP_PATH} -s`)
