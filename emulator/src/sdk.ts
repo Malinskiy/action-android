@@ -21,6 +21,8 @@ export interface AndroidSDK {
 
     installEmulatorPackage(api: string, tag: string, abi: string): Promise<any>
 
+    installPlatform(api: string): Promise<any>
+
     createEmulator(name: string, api: string, tag: string, abi: string): Promise<Emulator>
 
     listEmulators(): Promise<any>
@@ -74,7 +76,11 @@ abstract class BaseAndroidSdk implements AndroidSDK {
     }
 
     async installEmulatorPackage(api: string, tag: string, abi: string): Promise<any> {
-        await execWithResult(`${this.androidHome()}/tools/bin/sdkmanager`, ['emulator', 'tools', 'platform-tools', `system-images;android-${api};${tag};${abi}`, "--verbose"]);
+        await execWithResult(`${this.androidHome()}/tools/bin/sdkmanager`, ['emulator', 'tools', 'platform-tools', `system-images;android-${api};${tag};${abi}`]);
+    }
+
+    async installPlatform(api: string): Promise<any> {
+        await execWithResult(`${this.androidHome()}/tools/bin/sdkmanager`, [`platforms;android-${api}"`])
     }
 
     async createEmulator(name: string, api: string, tag: string, abi: string): Promise<any> {

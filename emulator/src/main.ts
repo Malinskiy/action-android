@@ -43,6 +43,7 @@ async function run() {
 
         try {
             await sdk.installEmulatorPackage(api, tag, abi)
+            await sdk.installPlatform(api)
 
             let supportsHardwareAcceleration = await sdk.verifyHardwareAcceleration();
             // if (!supportsHardwareAcceleration && abi == "x86") {
