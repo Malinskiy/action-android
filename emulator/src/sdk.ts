@@ -76,7 +76,7 @@ abstract class BaseAndroidSdk implements AndroidSDK {
     }
 
     async installEmulatorPackage(api: string, tag: string, abi: string): Promise<any> {
-        await execWithResult(`${this.androidHome()}/tools/bin/sdkmanager`, ['emulator', 'tools', 'platform-tools', `system-images;android-${api};${tag};${abi}`]);
+        await execWithResult(`bash -c \\\"${this.androidHome()}/tools/bin/sdkmanager emulator tools platform-tools system-images;android-${api};${tag};${abi} | uniq\"`);
     }
 
     async installPlatform(api: string): Promise<any> {
