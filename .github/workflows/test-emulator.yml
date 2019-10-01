@@ -7,8 +7,6 @@ jobs:
     - uses: actions/checkout@v1
     - run: npm config delete prefix && source ~/.nvm/nvm.sh && nvm install v12.10.0 && npm install && npm ci && npm run build
       working-directory: emulator
-      env:
-        PATH: "/usr/local/opt/node@10/bin:$PATH"
     - uses: ./emulator
       with:
         api: 25
