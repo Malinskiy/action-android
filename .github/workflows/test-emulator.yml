@@ -5,6 +5,7 @@ jobs:
     runs-on: macOS-10.14
     steps:
     - uses: actions/checkout@v1
+    - run: find / -name nvm
     - run: nvm use v12.10.0
     - run: npm install && npm ci && npm run build || cat /Users/runner/.npm/_logs/*.log
       working-directory: emulator
