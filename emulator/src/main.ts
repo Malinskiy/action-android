@@ -1,10 +1,6 @@
 import * as core from '@actions/core';
-import execWithResult from './exec-with-result'
-import * as fs from "fs";
 import {InputOptions} from "@actions/core/lib/core";
-import installAndroidSdk, {acceptLicenses} from "./sdk";
-import {installEmulatorPackage, listEmulators, startEmulator, verifyHardwareAcceleration} from "./emulator";
-import {createEmulator} from "./emulator";
+import {SdkFactory} from "./sdk";
 
 async function run() {
     try {
@@ -33,8 +29,10 @@ async function run() {
         }
 
         console.log("Installing Android SDK")
-        await installAndroidSdk()
-        await acceptLicenses()
+        let sdk = new SdkFactory().getAndroidSdk();
+
+        await sdk.install()
+        await sdk.acceptLicense()
 
         console.log(`Starting emulator with API=${api}, TAG=${tag} and ABI=${abi}...`)
 
@@ -43,19 +41,19 @@ async function run() {
         console.log(`PATH is ${process.env.PATH}`)
 
         try {
-            await installEmulatorPackage(api, tag, abi)
+            await sdk.installEmulatorPackage(api, tag, abi)
 
-            let supportsHardwareAcceleration = await verifyHardwareAcceleration();
+            let supportsHardwareAcceleration = await sdk.verifyHardwareAcceleration();
             // if (!supportsHardwareAcceleration && abi == "x86") {
             //     core.setFailed('Hardware acceleration is not supported')
             //     return
             // }
 
-            await createEmulator("emulator", api, tag, abi)
+            let emulator = await sdk.createEmulator("emulator", api, tag, abi);
 
-            console.log(`Available emulators: ${await listEmulators()}`)
+            console.log(`Available emulators: ${await sdk.listEmulators()}`)
 
-            await startEmulator("emulator")
+            await emulator.start()
         } catch (error) {
             console.error(error)
             core.setFailed(error.message);

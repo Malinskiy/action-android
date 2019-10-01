@@ -12,14 +12,10 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-18.04
+    runs-on: macOS-10.14
     steps:
     - uses: actions/checkout@v1
-    - run: npm ci
-      working-directory: emulator
     - run: npm run build
-      working-directory: emulator
-    - run: npm test
       working-directory: emulator
     - uses: ./emulator
       with:
