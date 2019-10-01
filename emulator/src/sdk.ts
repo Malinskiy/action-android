@@ -45,10 +45,12 @@ abstract class BaseAndroidSdk implements AndroidSDK {
         core.exportVariable('ANDROID_HOME', `${ANDROID_HOME}`);
         core.exportVariable('ANDROID_SDK_ROOT', `${ANDROID_HOME}`);
 
-        const PATH = process.env.PATH
+        const PATH = process.env.PATH!!
         let extraPaths = `${ANDROID_HOME}/bin:${ANDROID_HOME}/tools:${PATH}/tools/bin:${PATH}/platform-tools/bin`
 
-        core.exportVariable('PATH', `${PATH}:${extraPaths}`)
+        let PATH_WITHOUT_ANDROID = PATH.split(':').filter(entry => { !entry.includes("Android") })
+
+        core.exportVariable('PATH', `${PATH_WITHOUT_ANDROID}:${extraPaths}`)
         return true
     }
 

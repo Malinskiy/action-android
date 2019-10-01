@@ -3,7 +3,7 @@ import {AndroidSDK} from "./sdk";
 
 export class Emulator {
     private sdk: AndroidSDK;
-    private name: string;
+    private readonly name: string;
     private api: string;
     private abi: string;
     private tag: string;

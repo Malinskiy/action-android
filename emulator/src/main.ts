@@ -50,8 +50,7 @@ async function run() {
             // }
 
             let emulator = await sdk.createEmulator("emulator", api, tag, abi);
-
-            console.log(`Available emulators: ${await sdk.listEmulators()}`)
+            await sdk.listEmulators()
 
             await emulator.start()
         } catch (error) {
