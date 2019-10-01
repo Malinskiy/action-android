@@ -1,20 +1,11 @@
 name: "Test action-android/emulator"
-on:
-  pull_request:
-  push:
-    paths:
-    - 'emulator/*'
-    - 'emulator/*/*'
-    - 'emulator/*/*/*'
-    branches:
-      - master
-      - 'releases/*'
-
+on: push
 jobs:
   test:
     runs-on: macOS-10.14
     steps:
     - uses: actions/checkout@v1
+    - run: brew install node@10
     - run: npm run build
       working-directory: emulator
     - uses: ./emulator
