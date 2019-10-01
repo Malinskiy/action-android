@@ -7,6 +7,8 @@ jobs:
     - uses: actions/checkout@v1
     - run: brew install node@10
     - run: npm ci
+      env:
+        PATH: "/usr/local/opt/node@10/bin:$PATH"
     - run: npm run build
       env:
         PATH: "/usr/local/opt/node@10/bin:$PATH"
