@@ -53,7 +53,7 @@ async function run() {
             let emulator = await sdk.createEmulator("emulator", api, tag, abi);
             await sdk.listEmulators()
 
-            await execWithResult('find $ANDROID_SDK_HOME')
+            await execWithResult(`find ${sdk.androidHome()}/sdk_home`)
 
             await emulator.start()
         } catch (error) {
