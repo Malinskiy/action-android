@@ -1,0 +1,10 @@
+name: "Test hypervisor support on ubuntu"
+on: push
+jobs:
+  test:
+    runs-on: ubuntu-18.04
+    steps:
+      - run: cat /sys/hypervisor/properties/capabilities || true
+        name: xen
+      - run: cat /proc/cpuinfo
+        name: cpuinfo
