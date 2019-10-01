@@ -6,7 +6,7 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - run: env
-    - run: source ~/.nvm/nvm.sh && nvm use v12.10.0
+    - run: source ~/.nvm/nvm.sh && npm config delete prefix && nvm use v12.10.0
     - run: npm install && npm ci && npm run build || cat /Users/runner/.npm/_logs/*.log
       working-directory: emulator
       env:
