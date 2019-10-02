@@ -44,8 +44,8 @@ export class Emulator {
             }
             try {
                 let output = await execWithResult(`${this.sdk.androidHome()}/platform-tools/adb shell getprop sys.boot_completed | tr -d '\r' `)
-                console.log(output)
                 if (output == '1') {
+                    countdown = 0
                     return true
                 }
             } catch (e) {
