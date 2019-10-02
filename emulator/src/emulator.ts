@@ -23,7 +23,7 @@ export class Emulator {
 
     async waitForBoot(): Promise<boolean> {
         let countdown = 120
-        while (await execWithResult(`${this.sdk.androidHome()}/platform-tools/adb shell getprop sys.boot_completed | tr -d '\r' `) !== '1') {
+        while (await execWithResult(`timeout 10s ${this.sdk.androidHome()}/platform-tools/adb shell getprop sys.boot_completed | tr -d '\r' `) !== '1') {
             if (countdown == 0) {
                 console.error("Timeout waiting for the emulator")
                 return false
