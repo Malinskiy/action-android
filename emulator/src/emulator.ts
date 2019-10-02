@@ -27,7 +27,7 @@ export class Emulator {
     }
 
     async start(): Promise<any> {
-        await execWithResult(`bash -c \\\"${this.sdk.androidHome()}/tools/emulator @${this.name} &\"`)
+        await execWithResult(`bash -c \\\"${this.sdk.androidHome()}/tools/emulator @${this.name} -no-snapshot-save &\"`)
         return await this.waitForBoot()
     }
 
