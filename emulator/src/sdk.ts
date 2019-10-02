@@ -19,9 +19,9 @@ export interface AndroidSDK {
 
     acceptLicense(): Promise<any>
 
-    installEmulatorPackage(api: string, tag: string, abi: string): Promise<any>
+    installEmulatorPackage(api: string, tag: string, abi: string, verbose: boolean): Promise<any>
 
-    installPlatform(api: string): Promise<any>
+    installPlatform(api: string, verbose: boolean): Promise<any>
 
     createEmulator(name: string, api: string, tag: string, abi: string): Promise<Emulator>
 
@@ -52,7 +52,9 @@ abstract class BaseAndroidSdk implements AndroidSDK {
         const PATH = process.env.PATH!!
         let extraPaths = `${ANDROID_HOME}/bin:${ANDROID_HOME}/tools:${PATH}/tools/bin:${PATH}/platform-tools/bin`
 
-        let PATH_WITHOUT_ANDROID = PATH.split(':').filter(entry => { !entry.includes("Android") })
+        let PATH_WITHOUT_ANDROID = PATH.split(':').filter(entry => {
+            !entry.includes("Android")
+        })
 
         core.exportVariable('PATH', `${PATH_WITHOUT_ANDROID}:${extraPaths}`)
         return true
@@ -75,12 +77,22 @@ abstract class BaseAndroidSdk implements AndroidSDK {
         await writeLicenseFile(`${this.androidHome()}/licenses/android-googletv-license`, "601085b94cd77f0b54ff86406957099ebe79c4d6\n")
     }
 
-    async installEmulatorPackage(api: string, tag: string, abi: string): Promise<any> {
-        await execWithResult(`bash -c \\\"${this.androidHome()}/tools/bin/sdkmanager emulator tools platform-tools 'system-images;android-${api};${tag};${abi}' > /dev/null"`);
+    async installEmulatorPackage(api: string, tag: string, abi: string, verbose: boolean): Promise<any> {
+        let args = ""
+        if (!verbose) {
+            args += " > /dev/null"
+        }
+
+        await execWithResult(`bash -c \\\"${this.androidHome()}/tools/bin/sdkmanager emulator tools platform-tools 'system-images;android-${api};${tag};${abi}'${args}"`);
     }
 
-    async installPlatform(api: string): Promise<any> {
-        await execWithResult(`bash -c \\\"${this.androidHome()}/tools/bin/sdkmanager 'platforms;android-${api}' > /dev/null"`)
+    async installPlatform(api: string, verbose: boolean): Promise<any> {
+        let args = ""
+        if (!verbose) {
+            args += " > /dev/null"
+        }
+
+        await execWithResult(`bash -c \\\"${this.androidHome()}/tools/bin/sdkmanager 'platforms;android-${api}'${args}"`)
     }
 
     async createEmulator(name: string, api: string, tag: string, abi: string): Promise<any> {

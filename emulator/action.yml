@@ -14,6 +14,9 @@ inputs:
   acceptLicense:
     description: 'do you accept all current Android licenses?'
     default: 'yes'
+  verbose:
+    description: 'be verbose'
+    default: 'no'
 runs:
   using: 'node12'
   main: 'lib/main.js'

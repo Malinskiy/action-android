@@ -29,6 +29,11 @@ async function run() {
             return
         }
 
+        let verbose = false
+        if (core.getInput('verbose') == "yes") {
+            verbose = true
+        }
+
         console.log("Installing Android SDK")
         let sdk = new SdkFactory().getAndroidSdk();
 
@@ -42,8 +47,8 @@ async function run() {
         console.log(`PATH is ${process.env.PATH}`)
 
         try {
-            await sdk.installEmulatorPackage(api, tag, abi)
-            await sdk.installPlatform(api)
+            await sdk.installEmulatorPackage(api, tag, abi, verbose)
+            await sdk.installPlatform(api, verbose)
 
             let supportsHardwareAcceleration = await sdk.verifyHardwareAcceleration();
             // if (!supportsHardwareAcceleration && abi == "x86") {
