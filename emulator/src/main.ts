@@ -59,6 +59,7 @@ async function run() {
             let emulator = await sdk.createEmulator("emulator", api, tag, abi);
             await sdk.listEmulators()
 
+            console.log("starting adb server")
             await sdk.startAdbServer()
             await emulator.start()
         } catch (error) {
