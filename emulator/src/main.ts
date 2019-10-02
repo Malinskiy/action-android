@@ -34,7 +34,7 @@ async function run() {
             verbose = true
         }
 
-        console.log("Installing Android SDK")
+        console.log("Installing Android Sdk")
         let sdk = new SdkFactory().getAndroidSdk();
 
         await sdk.install()
