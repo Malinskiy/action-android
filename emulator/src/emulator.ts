@@ -27,10 +27,13 @@ export class Emulator {
                 console.error("Timeout waiting for the emulator")
                 return false
             }
-            let output = await execWithResult(`${this.sdk.androidHome()}/platform-tools/adb shell getprop sys.boot_completed | tr -d '\r' `)
-            console.log(output)
-            if (output == '1') {
-                return true
+            try {
+                let output = await execWithResult(`${this.sdk.androidHome()}/platform-tools/adb shell getprop sys.boot_completed | tr -d '\r' `)
+                console.log(output)
+                if (output == '1') {
+                    return true
+                }
+            } catch (e) {
             }
 
             await sleep(1000)

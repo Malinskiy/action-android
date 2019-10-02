@@ -26,6 +26,8 @@ export interface AndroidSDK {
     createEmulator(name: string, api: string, tag: string, abi: string): Promise<Emulator>
 
     listEmulators(): Promise<any>
+    
+    startAdbServer(): Promise<any>
 
     verifyHardwareAcceleration(): Promise<boolean>
 }
@@ -111,6 +113,10 @@ abstract class BaseAndroidSdk implements AndroidSDK {
 
     async listEmulators(): Promise<any> {
         await execWithResult(`${this.androidHome()}/tools/emulator -list-avds`)
+    }
+
+    async startAdbServer(): Promise<any> {
+        await execWithResult(`${this.androidHome()}/platform-tools/adb start-server`)
     }
 }
 

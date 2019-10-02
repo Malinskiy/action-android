@@ -51,16 +51,15 @@ async function run() {
             await sdk.installPlatform(api, verbose)
 
             let supportsHardwareAcceleration = await sdk.verifyHardwareAcceleration();
-            // if (!supportsHardwareAcceleration && abi == "x86") {
-            //     core.setFailed('Hardware acceleration is not supported')
-            //     return
-            // }
+            if (!supportsHardwareAcceleration && abi == "x86") {
+                core.setFailed('Hardware acceleration is not supported')
+                return
+            }
 
             let emulator = await sdk.createEmulator("emulator", api, tag, abi);
             await sdk.listEmulators()
 
-            await execWithResult(`find ${sdk.androidHome()}/sdk_home`)
-
+            await sdk.startAdbServer()
             await emulator.start()
         } catch (error) {
             console.error(error)
