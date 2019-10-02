@@ -32,7 +32,7 @@ export class Emulator {
     }
 
     async stop(): Promise<any> {
-        await execWithResult(`bash -c \\\"${this.sdk.androidHome()}/platform-tools/adb -s ${this.adbPort} emu kill\"`)
+        await execWithResult(`bash -c \\\"${this.sdk.androidHome()}/platform-tools/adb -s emulator-${this.adbPort} emu kill\"`)
         return await this.waitForBoot()
     }
 
