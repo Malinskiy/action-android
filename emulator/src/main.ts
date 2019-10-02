@@ -62,6 +62,9 @@ async function run() {
             console.log("starting adb server")
             await sdk.startAdbServer()
             await emulator.start()
+            console.log("emulator started and booted")
+
+            await emulator.stop()
         } catch (error) {
             console.error(error)
             core.setFailed(error.message);

@@ -26,7 +26,7 @@ export interface AndroidSDK {
     createEmulator(name: string, api: string, tag: string, abi: string): Promise<Emulator>
 
     listEmulators(): Promise<any>
-    
+
     startAdbServer(): Promise<any>
 
     verifyHardwareAcceleration(): Promise<boolean>
@@ -34,6 +34,8 @@ export interface AndroidSDK {
 
 abstract class BaseAndroidSdk implements AndroidSDK {
     abstract sdkUrl: string
+
+    portCounter: number = 5554
 
     async install(): Promise<boolean> {
         const ANDROID_HOME = this.androidHome()
@@ -99,7 +101,7 @@ abstract class BaseAndroidSdk implements AndroidSDK {
 
     async createEmulator(name: string, api: string, tag: string, abi: string): Promise<any> {
         await execWithResult(`bash -c \\\"echo -n no | ${this.androidHome()}/tools/bin/avdmanager create avd -n ${name} --package \\\"system-images;android-${api};${tag};${abi}\\\" --tag ${tag}\"`)
-        return new Emulator(this, name, api, abi, tag)
+        return new Emulator(this, name, api, abi, tag, this.portCounter++, this.portCounter++)
     }
 
     async verifyHardwareAcceleration(): Promise<boolean> {

@@ -7,17 +7,32 @@ export class Emulator {
     private api: string;
     private abi: string;
     private tag: string;
+    private adbPort: number;
+    private telnetPort: number;
 
-    public constructor(sdk: AndroidSDK, name: string, api: string, abi: string, tag: string) {
+    public constructor(sdk: AndroidSDK,
+                       name: string,
+                       api: string,
+                       abi: string,
+                       tag: string,
+                       adbPort: number,
+                       telnetPort: number) {
         this.sdk = sdk
         this.name = name;
         this.api = api;
         this.abi = abi;
         this.tag = tag;
+        this.adbPort = adbPort;
+        this.telnetPort = telnetPort;
     }
 
     async start(): Promise<any> {
         await execWithResult(`bash -c \\\"${this.sdk.androidHome()}/tools/emulator @${this.name} &\"`)
+        return await this.waitForBoot()
+    }
+
+    async stop(): Promise<any> {
+        await execWithResult(`bash -c \\\"${this.sdk.androidHome()}/platform-tools/adb -s ${this.adbPort} emu kill\"`)
         return await this.waitForBoot()
     }
 
