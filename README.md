@@ -45,10 +45,10 @@ steps:
 - `tag` is either the **default** or **google_apis**. Use google_apis for emulator with google store
 - `abi` is the abi of the emulator. x86 is the fastest one.
 
-### Info about emulator-start and emulator-stop
-Currently the GitHub Actions do not support processes that outlive the specific step hence you can't really do a 
+### Info about emulator-start and emulator-stop actions
+Currently GitHub Actions do not support OS processes that outlive the specific step hence you can't really do a 
 workflow that starts the emulator and then execute your testing command in a separate step. This is the reason why
-I've written the combined `emulator-run-cmd` action.
+I've written the combined `emulator-run-cmd` action. If you have multiple commands to run in parallel to emulator I suggest to write a script and execute it via the cmd arg.
 
 # License
 
