@@ -67,7 +67,12 @@ function run() {
                 yield sdk.startAdbServer();
                 yield emulator.start();
                 console.log("emulator started and booted");
-                yield exec_with_result_1.default(`${cmd}`);
+                try {
+                    yield exec_with_result_1.default(`${cmd}`);
+                }
+                catch (e) {
+                    //ignore
+                }
                 console.log("stopping emulator");
                 yield emulator.stop();
                 console.log("emulator is stopped");
