@@ -46,14 +46,18 @@ export class Emulator {
                 let output = await execWithResult(`${this.sdk.androidHome()}/platform-tools/adb shell getprop sys.boot_completed | tr -d '\r' `)
                 if (output == '1') {
                     countdown = 0
+                    console.log("Emulator booted")
                     return true
                 }
             } catch (e) {
+                console.error(e.message)
             }
 
+            console.log("Sleeping for 1s")
             await sleep(1000)
             countdown--
         }
+        console.log("Timeout waiting for emulator to boot. Exiting")
         return false
     }
 }
