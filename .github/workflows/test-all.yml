@@ -8,17 +8,13 @@ jobs:
     - name: test install-sdk
       run: npm config delete prefix && source ~/.nvm/nvm.sh && nvm install v12.10.0 && npm install && npm ci && npm run build
       working-directory: install-sdk
-    - name: test emulator-start
+    - name: test emulator-run-cmd
       run: npm config delete prefix && source ~/.nvm/nvm.sh && nvm install v12.10.0 && npm install && npm ci && npm run build
-      working-directory: emulator-start
-    - name: test emulator-stop
-      run: npm config delete prefix && source ~/.nvm/nvm.sh && nvm install v12.10.0 && npm install && npm ci && npm run build
-      working-directory: emulator-stop
+      working-directory: emulator-run-cmd
     - uses: ./install-sdk
-    - uses: ./emulator-start
+    - uses: ./emulator-run-cmd
       with:
         api: 25
         tag: default
         abi: x86
-    - run: adb shell getprop
-    - uses: ./emulator-stop
+        cmd: adb shell getprop
