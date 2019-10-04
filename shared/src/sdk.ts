@@ -11,9 +11,9 @@ const ANDROID_TMP_PATH = "/tmp/android-sdk.zip"
 let writeFileAsync = util.promisify(writeFile)
 
 export interface AndroidSDK {
-    sdkUrl: string
+    defaultSdkUrl: string
 
-    install(): Promise<boolean>;
+    install(url: string): Promise<boolean>;
 
     androidHome(): string
 
@@ -27,24 +27,31 @@ export interface AndroidSDK {
 
     listEmulators(): Promise<any>
 
+    listRunningEmulators(): Promise<Array<Emulator>>
+
     startAdbServer(): Promise<any>
 
     verifyHardwareAcceleration(): Promise<boolean>
 }
 
-abstract class BaseAndroidSdk implements AndroidSDK {
-    abstract sdkUrl: string
+export abstract class BaseAndroidSdk implements AndroidSDK {
+    abstract defaultSdkUrl: string
 
     portCounter: number = 5554
 
-    async install(): Promise<boolean> {
+    async install(url: string): Promise<boolean> {
         const ANDROID_HOME = this.androidHome()
+
+        let sdkUrl: string = url
+        if (sdkUrl == null || sdkUrl == "") {
+            sdkUrl = this.defaultSdkUrl
+        }
 
         if (fs.existsSync(`${process.env.HOME}/.android`)) {
             await execWithResult(`mv ${process.env.HOME}/.android ${process.env.HOME}/.android.backup`)
         }
 
-        await execWithResult(`curl -L ${this.sdkUrl} -o ${ANDROID_TMP_PATH} -s`)
+        await execWithResult(`curl -L ${sdkUrl} -o ${ANDROID_TMP_PATH} -s`)
         await execWithResult(`unzip -q ${ANDROID_TMP_PATH} -d ${ANDROID_HOME}`)
         await execWithResult(`rm ${ANDROID_TMP_PATH}`)
         await execWithResult(`mkdir -p ${ANDROID_HOME}/sdk_home`)
@@ -117,17 +124,41 @@ abstract class BaseAndroidSdk implements AndroidSDK {
         await execWithResult(`${this.androidHome()}/tools/emulator -list-avds`)
     }
 
+    async listRunningEmulators(): Promise<Array<Emulator>> {
+        let output = await execWithResult(`${this.androidHome()}/platform-tools/adb devices`)
+        return await this.parseDevicesOutput(output);
+    }
+
+    async parseDevicesOutput(output: string): Promise<Array<Emulator>> {
+        let result = new Array<Emulator>()
+
+        let lines = output.split(/\r?\n/);
+        for (let line in lines) {
+            if (line.startsWith("emulator")) {
+                let split = line.split(" ");
+                let serial = split[0];
+                let port = serial.split("-")[1]
+                let nameOutput = await execWithResult(`${this.androidHome()}/platform-tools/adb adb -s ${serial} emu avd name`)
+                let nameLines = nameOutput.split(/\r?\n/);
+                let name = nameLines[0];
+
+                result.fill(new Emulator(this, name, "", "", "", parseInt(port), parseInt(port) + 1))
+            }
+        }
+        return result;
+    }
+
     async startAdbServer(): Promise<any> {
         await execWithResult(`${this.androidHome()}/platform-tools/adb start-server`)
     }
 }
 
 class LinuxAndroidSdk extends BaseAndroidSdk {
-    sdkUrl = "https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip"
+    defaultSdkUrl = "https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip"
 }
 
 class MacOSAndroidSdk extends BaseAndroidSdk {
-    sdkUrl = "https://dl.google.com/android/repository/sdk-tools-darwin-4333796.zip"
+    defaultSdkUrl = "https://dl.google.com/android/repository/sdk-tools-darwin-4333796.zip"
 }
 
 export class SdkFactory {

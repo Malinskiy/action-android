@@ -1,0 +1,21 @@
+name: "Test actions in a simple workflow"
+on: push
+jobs:
+  test:
+    runs-on: macOS-10.14
+    steps:
+    - uses: actions/checkout@v1
+    - run: npm config delete prefix && source ~/.nvm/nvm.sh && nvm install v12.10.0 && npm install && npm ci && npm run build
+      working-directory: install-sdk
+    - run: npm config delete prefix && source ~/.nvm/nvm.sh && nvm install v12.10.0 && npm install && npm ci && npm run build
+      working-directory: emulator-start
+    - run: npm config delete prefix && source ~/.nvm/nvm.sh && nvm install v12.10.0 && npm install && npm ci && npm run build
+      working-directory: emulator-stop
+    - uses: ./install-sdk
+    - uses: ./emulator-start
+      with:
+        api: 25
+        tag: default
+        abi: x86
+    - run: adb shell getprop
+    - uses: ./emulator-stop

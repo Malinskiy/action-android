@@ -1,7 +1,6 @@
 import * as core from '@actions/core';
 import {InputOptions} from "@actions/core/lib/core";
-import {SdkFactory} from "./sdk";
-import execWithResult from "./exec-with-result";
+import {SdkFactory} from "../../shared/src/sdk";
 
 async function run() {
     try {
@@ -23,28 +22,18 @@ async function run() {
             tag = 'google_apis'
         }
 
-        let acceptLicense = core.getInput('acceptLicense')
-        if (acceptLicense !== "yes") {
-            core.setFailed('You can\'t use this unless you accept the Android SDK licenses')
-            return
-        }
-
         let verbose = false
         if (core.getInput('verbose') == "yes") {
             verbose = true
         }
-
-        console.log("Installing Android Sdk")
-        let sdk = new SdkFactory().getAndroidSdk();
-
-        await sdk.install()
-        await sdk.acceptLicense()
 
         console.log(`Starting emulator with API=${api}, TAG=${tag} and ABI=${abi}...`)
 
         const androidHome = process.env.ANDROID_HOME
         console.log(`ANDROID_HOME is ${androidHome}`)
         console.log(`PATH is ${process.env.PATH}`)
+
+        let sdk = new SdkFactory().getAndroidSdk();
 
         try {
             await sdk.installEmulatorPackage(api, tag, abi, verbose)
@@ -57,14 +46,10 @@ async function run() {
             }
 
             let emulator = await sdk.createEmulator("emulator", api, tag, abi);
-            await sdk.listEmulators()
-
             console.log("starting adb server")
             await sdk.startAdbServer()
             await emulator.start()
             console.log("emulator started and booted")
-
-            await emulator.stop()
         } catch (error) {
             console.error(error)
             core.setFailed(error.message);

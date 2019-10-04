@@ -1,0 +1,13 @@
+name: 'Install Android SDK action'
+description: 'Install minimal Android SDK from url'
+author: 'Malinskiy'
+inputs:
+  url:
+    description: 'url of Android SDK zip'
+    default: ''
+  acceptLicense:
+    description: 'do you accept all current Android licenses?'
+    default: 'yes'
+runs:
+  using: 'node12'
+  main: 'lib/main.js'

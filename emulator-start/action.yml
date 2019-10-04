@@ -11,9 +11,6 @@ inputs:
   tag:
     description: 'default or google_apis'
     default: 'default'
-  acceptLicense:
-    description: 'do you accept all current Android licenses?'
-    default: 'yes'
   verbose:
     description: 'be verbose'
     default: 'no'
