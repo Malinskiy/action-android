@@ -58,7 +58,11 @@ async function run() {
             await emulator.start()
             console.log("emulator started and booted")
 
-            await execWithResult(`${cmd}`)
+            try {
+                await execWithResult(`${cmd}`)
+            } catch (e) {
+                //ignore
+            }
 
             console.log("stopping emulator")
             await emulator.stop()
