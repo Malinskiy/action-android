@@ -28,14 +28,14 @@ export class Emulator {
 
     async start(): Promise<any> {
         await execWithResult(`bash -c \\\"${this.sdk.androidHome()}/tools/emulator @${this.name} -no-snapshot-save &\"`)
-        return await this.waitForBoot()
+        let booted = await this.waitForBoot();
+        console.log(`booted=${booted}`)
+        return
     }
 
     async stop(): Promise<any> {
         await execWithResult(`bash -c \\\"${this.sdk.androidHome()}/platform-tools/adb -s emulator-${this.adbPort} emu kill\"`)
         console.log("emu kill finished")
-        let booted = await this.waitForBoot();
-        console.log(`booted=${booted}`)
         return
     }
 
