@@ -5,11 +5,14 @@ jobs:
     runs-on: macOS-10.14
     steps:
     - uses: actions/checkout@v1
-    - run: npm config delete prefix && source ~/.nvm/nvm.sh && nvm install v12.10.0 && npm install && npm ci && npm run build
+    - name: test install-sdk
+      run: npm config delete prefix && source ~/.nvm/nvm.sh && nvm install v12.10.0 && npm install && npm ci && npm run build
       working-directory: install-sdk
-    - run: npm config delete prefix && source ~/.nvm/nvm.sh && nvm install v12.10.0 && npm install && npm ci && npm run build
+    - name: test emulator-start
+      run: npm config delete prefix && source ~/.nvm/nvm.sh && nvm install v12.10.0 && npm install && npm ci && npm run build
       working-directory: emulator-start
-    - run: npm config delete prefix && source ~/.nvm/nvm.sh && nvm install v12.10.0 && npm install && npm ci && npm run build
+    - name: test emulator-stop
+      run: npm config delete prefix && source ~/.nvm/nvm.sh && nvm install v12.10.0 && npm install && npm ci && npm run build
       working-directory: emulator-stop
     - uses: ./install-sdk
     - uses: ./emulator-start
