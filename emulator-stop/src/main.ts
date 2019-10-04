@@ -1,6 +1,6 @@
 import * as core from '@actions/core';
-import {SdkFactory} from "../../shared/src/sdk";
-import {Emulator} from "../../shared/src/emulator";
+import {SdkFactory} from "./sdk";
+import {Emulator} from "./emulator";
 
 async function run() {
     try {

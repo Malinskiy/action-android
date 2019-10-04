@@ -1,6 +1,6 @@
 import * as core from '@actions/core';
 import {InputOptions} from "@actions/core/lib/core";
-import {SdkFactory} from "../../shared/src/sdk";
+import {SdkFactory} from "./sdk";
 
 async function run() {
     try {
