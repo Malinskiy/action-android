@@ -2,6 +2,10 @@
 
 This is a collection of GitHub Actions for Android development
 
+# Requirements
+
+This is only tested with **macOS-10.14** environment. It might work on linux but there is no support for kvm there so don't expect to have api 26+ available there.
+
 ## Android SDK
 This repo provides an action for installing the Android SDK on the build agent. It will override whatever setup is 
 already there. You might want to do this since default GitHub Actions environments are now missing `sdkmanager` binary
@@ -33,14 +37,22 @@ It's imperative(!) to use `runs-on: macOS-10.14` if you want to have hardware ac
 steps:
   - uses: actions/checkout@v1
   - uses: malinskiy/action-android/emulator-run-cmd@release/0.0.1
-  - run: adb devices
-  - run: echo $ANDROID_HOME
+    with:
+      cmd: ./gradlew integrationTest
+      api: 25
+      tag: default
+      abi: x86
 ```
 
-### Info about emulator-start and emulator-stop
-Currently the GitHub Actions do not support processes that outlive the specific step hence you can't really do a 
+- `cmd` is the shell command to execute while the emulator is booted.
+- `api` is the API version of emulator
+- `tag` is either the **default** or **google_apis**. Use google_apis for emulator with google store
+- `abi` is the abi of the emulator. x86 is the fastest one.
+
+### Info about emulator-start and emulator-stop actions
+Currently GitHub Actions do not support OS processes that outlive the specific step hence you can't really do a 
 workflow that starts the emulator and then execute your testing command in a separate step. This is the reason why
-I've written the combined `emulator-run-cmd` action.
+I've written the combined `emulator-run-cmd` action. If you have multiple commands to run in parallel to emulator I suggest to write a script and execute it via the cmd arg.
 
 # License
 
@@ -67,3 +79,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
+
+## Android SDK
+By using this action you're automatically accepting the relevant licenses of Android SDK. See the Android SDK for more details.
