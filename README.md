@@ -33,9 +33,17 @@ It's imperative(!) to use `runs-on: macOS-10.14` if you want to have hardware ac
 steps:
   - uses: actions/checkout@v1
   - uses: malinskiy/action-android/emulator-run-cmd@release/0.0.1
-  - run: adb devices
-  - run: echo $ANDROID_HOME
+    with:
+      cmd: ./gradlew integrationTest
+      api: 25
+      tag: default
+      abi: x86
 ```
+
+- `cmd` is the shell command to execute while the emulator is booted.
+- `api` is the API version of emulator
+- `tag` is either the **default** or **google_apis**. Use google_apis for emulator with google store
+- `abi` is the abi of the emulator. x86 is the fastest one.
 
 ### Info about emulator-start and emulator-stop
 Currently the GitHub Actions do not support processes that outlive the specific step hence you can't really do a 
@@ -67,3 +75,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
+
+## Android SDK
+By using this action you're automatically accepting the relevant licenses of Android SDK. See the Android SDK for more details.
