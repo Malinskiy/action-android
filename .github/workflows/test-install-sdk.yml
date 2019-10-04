@@ -1,0 +1,10 @@
+name: "Test simple install workflow"
+on: push
+jobs:
+  test:
+    runs-on: macOS-10.14
+    steps:
+      - uses: actions/checkout@v1
+      - uses: ./install-sdk
+      - run: adb devices
+      - run: echo $ANDROID_HOME
