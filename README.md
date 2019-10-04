@@ -2,6 +2,10 @@
 
 This is a collection of GitHub Actions for Android development
 
+# Requirements
+
+This is only tested agains **macOS-10.14** environment. It might work on linux but there is no support for kvm there so don't expect to have api 26+ available there.
+
 ## Android SDK
 This repo provides an action for installing the Android SDK on the build agent. It will override whatever setup is 
 already there. You might want to do this since default GitHub Actions environments are now missing `sdkmanager` binary
