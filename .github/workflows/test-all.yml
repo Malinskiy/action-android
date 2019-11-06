@@ -2,7 +2,10 @@ name: "Test actions in a simple workflow"
 on: push
 jobs:
   test:
-    runs-on: macOS-10.14
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macOS-10.14, macOS-10.15]
     steps:
     - uses: actions/checkout@v1
     - name: test install-sdk
