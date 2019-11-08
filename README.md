@@ -16,7 +16,7 @@ so they're immutable.
 ```yaml
 steps:
   - uses: actions/checkout@v1
-  - uses: malinskiy/action-android/install-sdk@release/0.0.2
+  - uses: malinskiy/action-android/install-sdk@release/0.0.3
   - run: adb devices
   - run: echo $ANDROID_HOME
 ```
@@ -36,7 +36,7 @@ It's imperative(!) to use `runs-on: macOS-10.14` if you want to have hardware ac
 ```yaml
 steps:
   - uses: actions/checkout@v1
-  - uses: malinskiy/action-android/emulator-run-cmd@release/0.0.2
+  - uses: malinskiy/action-android/emulator-run-cmd@release/0.0.3
     with:
       cmd: ./gradlew integrationTest
       api: 25
