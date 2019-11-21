@@ -18,7 +18,7 @@ jobs:
       id: cache-install-sdk
       uses: actions/cache@v1
       with:
-        path: ${{ env.HOME }}/android-sdk
+        path: ~/android-sdk
         key: ${{ runner.os }}-android-sdk
     - uses: ./install-sdk
       if: steps.cache-install-sdk.outputs.cache-hit != 'true'
