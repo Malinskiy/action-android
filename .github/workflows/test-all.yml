@@ -22,6 +22,7 @@ jobs:
         key: ${{ runner.os }}-android-sdk
     - uses: ./install-sdk
       if: steps.cache-install-sdk.outputs.cache-hit != 'true'
+      name: install sdk
     - uses: ./emulator-run-cmd
       with:
         api: 25
