@@ -14,14 +14,7 @@ jobs:
     - name: test emulator-run-cmd
       run: npm config delete prefix && source ~/.nvm/nvm.sh && nvm install v12.10.0 && npm install && npm ci && npm run build
       working-directory: emulator-run-cmd
-    - name: cache android-sdk
-      id: cache-install-sdk
-      uses: actions/cache@v1
-      with:
-        path: ~/android-sdk
-        key: ${{ runner.os }}-android-sdk
     - uses: ./install-sdk
-      if: steps.cache-install-sdk.outputs.cache-hit != 'true'
       name: install sdk
     - uses: ./emulator-run-cmd
       with:
