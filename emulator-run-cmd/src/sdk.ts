@@ -164,7 +164,3 @@ export class SdkFactory {
         }
     }
 }
-
-async function writeLicenseFile(file: string, content: string) {
-    await writeFileAsync(file, content)
-}
