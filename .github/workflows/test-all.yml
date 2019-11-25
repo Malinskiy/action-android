@@ -1,5 +1,5 @@
 name: "Test actions in a simple workflow"
-on: push
+on: push, pull_request
 jobs:
   test:
     runs-on: ${{ matrix.os }}
