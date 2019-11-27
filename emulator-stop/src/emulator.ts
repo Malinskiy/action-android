@@ -26,11 +26,11 @@ export class Emulator {
         this.telnetPort = telnetPort;
     }
 
-    async start(): Promise<any> {
+    async start(): Promise<Boolean> {
         await execWithResult(`bash -c \\\"${this.sdk.androidHome()}/tools/emulator @${this.name} -no-snapshot-save &\"`)
         let booted = await this.waitForBoot();
         console.log(`booted=${booted}`)
-        return
+        return booted
     }
 
     async stop(): Promise<any> {

@@ -55,9 +55,13 @@ async function run() {
             let emulator = await sdk.createEmulator("emulator", api, tag, abi);
             console.log("starting adb server")
             await sdk.startAdbServer()
-            await emulator.start()
-            console.log("emulator started and booted")
+            let booted = await emulator.start();
+            if (!booted) {
+                core.setFailed("emulator boot failed")
+                return
+            }
 
+            console.log("emulator started and booted")
             try {
                 await execWithResult(`${cmd}`)
             } catch (e) {
