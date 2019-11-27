@@ -1,7 +1,0 @@
-name: 'Android Emulator Action'
-description: 'Stops first currently running Android emulator'
-author: 'Malinskiy'
-inputs:
-runs:
-  using: 'node12'
-  main: 'lib/main.js'
