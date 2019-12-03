@@ -92,6 +92,7 @@ export abstract class BaseAndroidSdk implements AndroidSDK {
         await writeLicenseFile(`${this.androidHome()}/licenses/mips-android-sysimage-license`, "e9acab5b5fbb560a72cfaecce8946896ff6aab9d\n")
         await writeLicenseFile(`${this.androidHome()}/licenses/google-gdk-license`, "33b6a2b64607f11b759f320ef9dff4ae5c47d97a\n")
         await writeLicenseFile(`${this.androidHome()}/licenses/android-googletv-license`, "601085b94cd77f0b54ff86406957099ebe79c4d6\n")
+        await writeLicenseFile(`${this.androidHome()}/licenses/android-sdk-arm-dbt-license`, "859f317696f67ef3d7f30a50a5560e7834b43903")
     }
 
     async installEmulatorPackage(api: string, tag: string, abi: string, verbose: boolean): Promise<any> {
