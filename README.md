@@ -44,10 +44,14 @@ steps:
       abi: x86
 ```
 
-- `cmd` is the shell command to execute while the emulator is booted.
+- `cmd` is the shell command to execute while the emulator is booted
 - `api` is the API version of emulator
 - `tag` is either the **default** or **google_apis**. Use google_apis for emulator with google store
-- `abi` is the abi of the emulator. x86 is the fastest one.
+- `abi` is the abi of the emulator. x86 is the fastest one
+- `hardwareProfile` is the hardware profile of the emulator. Check the `avdmanager list` for supported value. I advise to use string names instead of ids since those might change between sdk updates
+- `cmdOptions` is value which you can use to pass additional arguments to the emulator start command. By default this is `-no-snapshot-save -noaudio -no-boot-anim`
+- `disableAnimations` to disable animations using the system preferences. `false` by default. Keep in mind that applications might not respect system settings and these might have no effect at all 
+- `verbose` if you want to enable additional logging for this action
 
 ### Info about emulator-start and emulator-stop actions
 Currently GitHub Actions do not support OS processes that outlive the specific step hence you can't really do a 

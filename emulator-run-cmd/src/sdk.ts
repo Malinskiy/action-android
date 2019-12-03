@@ -25,7 +25,7 @@ export interface AndroidSDK {
 
     installPlatform(api: string, verbose: boolean): Promise<any>
 
-    createEmulator(name: string, api: string, tag: string, abi: string): Promise<Emulator>
+    createEmulator(name: string, api: string, tag: string, abi: string, hardwareProfile: string): Promise<Emulator>
 
     listEmulators(): Promise<any>
 
@@ -112,8 +112,13 @@ export abstract class BaseAndroidSdk implements AndroidSDK {
         await execWithResult(`bash -c \\\"${this.androidHome()}/tools/bin/sdkmanager 'platforms;android-${api}'${args}"`)
     }
 
-    async createEmulator(name: string, api: string, tag: string, abi: string): Promise<any> {
-        await execWithResult(`bash -c \\\"echo -n no | ${this.androidHome()}/tools/bin/avdmanager create avd -n ${name} --package \\\"system-images;android-${api};${tag};${abi}\\\" --tag ${tag}\"`)
+    async createEmulator(name: string, api: string, tag: string, abi: string, hardwareProfile: string): Promise<any> {
+        let additionalOptions = ""
+        if (hardwareProfile != null && hardwareProfile != "") {
+            additionalOptions += `--device ${hardwareProfile}`
+        }
+
+        await execWithResult(`bash -c \\\"echo -n no | ${this.androidHome()}/tools/bin/avdmanager create avd -n ${name} --package \\\"system-images;android-${api};${tag};${abi}\\\" --tag ${tag}\" ${additionalOptions}`)
         return new Emulator(this, name, api, abi, tag, this.portCounter++, this.portCounter++)
     }
 
