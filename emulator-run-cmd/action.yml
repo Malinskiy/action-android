@@ -14,9 +14,18 @@ inputs:
   cmd:
     description: 'cmd to execute while the emulator is running'
     default: ''
+  disableAnimations:
+    description: ''
+    default: 'false'
+  cmdOptions:
+    description: 'additional emulator options passed to the emulator start cmd'
+    default: '-no-snapshot-save -noaudio -no-boot-anim'
+  hardwareProfile:
+    description: 'device profile to use. see avdmanager list for possible options'
+    default: ''
   verbose:
     description: 'be verbose'
-    default: 'no'
+    default: 'false'
 runs:
   using: 'node12'
   main: 'lib/main.js'

@@ -24,7 +24,7 @@ async function run() {
         }
 
         let verbose = false
-        if (core.getInput('verbose') == "yes") {
+        if (core.getInput('verbose') == "true") {
             verbose = true
         }
 
@@ -32,6 +32,21 @@ async function run() {
         if (cmd === "") {
             console.error("Please specify cmd to execute in parallel with emulator")
             return
+        }
+
+        let cmdOptions = core.getInput('cmdOptions')
+        if (cmdOptions == null) {
+            cmdOptions = "-no-snapshot-save -noaudio -no-boot-anim"
+        }
+
+        let hardwareProfile = core.getInput('hardwareProfile')
+        if (hardwareProfile == null) {
+            hardwareProfile = ""
+        }
+
+        let disableAnimations = false
+        if (core.getInput('disableAnimations') == "true") {
+            disableAnimations = true
         }
 
         console.log(`Starting emulator with API=${api}, TAG=${tag} and ABI=${abi}...`)
@@ -52,13 +67,19 @@ async function run() {
                 return
             }
 
-            let emulator = await sdk.createEmulator("emulator", api, tag, abi);
+            let emulator = await sdk.createEmulator("emulator", api, tag, abi, hardwareProfile);
             console.log("starting adb server")
             await sdk.startAdbServer()
-            let booted = await emulator.start();
+            let booted = await emulator.start(cmdOptions);
             if (!booted) {
                 core.setFailed("emulator boot failed")
                 return
+            }
+
+            //Pre-setup
+            await emulator.unlock()
+            if (disableAnimations) {
+                await emulator.disableAnimations()
             }
 
             console.log("emulator started and booted")

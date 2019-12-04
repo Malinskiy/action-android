@@ -26,8 +26,8 @@ export class Emulator {
         this.telnetPort = telnetPort;
     }
 
-    async start(): Promise<Boolean> {
-        await execWithResult(`bash -c \\\"${this.sdk.emulatorCmd()} @${this.name} -no-snapshot-save &\"`)
+    async start(cmdOptions: String): Promise<Boolean> {
+        await execWithResult(`bash -c \\\"${this.sdk.emulatorCmd()} @${this.name} ${cmdOptions} &\"`)
         let booted = await this.waitForBoot();
         console.log(`booted=${booted}`)
         return booted
@@ -46,7 +46,7 @@ export class Emulator {
                 return false
             }
             try {
-                let output = await execWithResult(`${this.sdk.androidHome()}/platform-tools/adb shell getprop sys.boot_completed`)
+                let output = await this.execAdbCommand("shell getprop sys.boot_completed")
                 if (output.trim() == '1') {
                     countdown = 0
                     console.log("Emulator booted")
@@ -62,6 +62,25 @@ export class Emulator {
         }
         console.log("Timeout waiting for emulator to boot. Exiting")
         return false
+    }
+
+    async unlock(): Promise<any> {
+        await this.execAdbCommand("shell input keyevent 82")
+    }
+
+    async disableAnimations(): Promise<any> {
+        console.log('Disabling animations');
+        try {
+            await this.execAdbCommand("shell settings put global window_animation_scale 0.0")
+            await this.execAdbCommand("shell settings put global transition_animation_scale 0.0")
+            await this.execAdbCommand("shell settings put global animator_duration_scale 0.0")
+        } catch (e) {
+            console.warn("error disabling animations. skipping")
+        }
+    }
+
+    async execAdbCommand(args: String): Promise<String> {
+        return await execWithResult(`${this.sdk.androidHome()}/platform-tools/adb -s emulator-${this.adbPort} ${args}`)
     }
 }
 
