@@ -84,7 +84,11 @@ async function run() {
 
             console.log("emulator started and booted")
             try {
-                await execWithResult(`${cmd}`)
+                let result = await execWithResult(`${cmd}`);
+                let code = result.exitCode;
+                if (code != 0) {
+                    core.setFailed(`process exited with code ${code}`)
+                }
             } catch (e) {
                 //ignore
             }

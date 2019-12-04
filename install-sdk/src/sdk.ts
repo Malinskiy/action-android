@@ -1,5 +1,5 @@
 import * as core from "@actions/core";
-import execWithResult from "./exec-with-result";
+import execWithResult, {execIgnoreFailure} from "./exec-with-result";
 import * as fs from "fs";
 import {writeFile} from "fs";
 import * as util from "util";
@@ -82,7 +82,7 @@ export abstract class BaseAndroidSdk implements AndroidSDK {
     }
 
     async acceptLicense(): Promise<any> {
-        await execWithResult(`mkdir -p ${this.androidHome()}/licenses`)
+        await execIgnoreFailure(`mkdir -p ${this.androidHome()}/licenses`)
 
         await writeLicenseFile(`${this.androidHome()}/licenses/android-sdk-license`, "8933bad161af4178b1185d1a37fbf41ea5269c55\n" +
             "d56f5187479451eabf01fb78af6dfcb131a6481e\n" +
@@ -101,7 +101,7 @@ export abstract class BaseAndroidSdk implements AndroidSDK {
             args += " > /dev/null"
         }
 
-        await execWithResult(`bash -c \\\"${this.androidHome()}/tools/bin/sdkmanager emulator tools platform-tools 'system-images;android-${api};${tag};${abi}'${args}"`);
+        await execIgnoreFailure(`bash -c \\\"${this.androidHome()}/tools/bin/sdkmanager emulator tools platform-tools 'system-images;android-${api};${tag};${abi}'${args}"`);
     }
 
     async installPlatform(api: string, verbose: boolean): Promise<any> {
@@ -110,7 +110,7 @@ export abstract class BaseAndroidSdk implements AndroidSDK {
             args += " > /dev/null"
         }
 
-        await execWithResult(`bash -c \\\"${this.androidHome()}/tools/bin/sdkmanager 'platforms;android-${api}'${args}"`)
+        await execIgnoreFailure(`bash -c \\\"${this.androidHome()}/tools/bin/sdkmanager 'platforms;android-${api}'${args}"`)
     }
 
     async createEmulator(name: string, api: string, tag: string, abi: string, hardwareProfile: string): Promise<any> {
@@ -119,7 +119,7 @@ export abstract class BaseAndroidSdk implements AndroidSDK {
             additionalOptions += `--device ${hardwareProfile}`
         }
 
-        await execWithResult(`bash -c \\\"echo -n no | ${this.androidHome()}/tools/bin/avdmanager create avd -n ${name} --package \\\"system-images;android-${api};${tag};${abi}\\\" --tag ${tag}\" ${additionalOptions}`)
+        await execIgnoreFailure(`bash -c \\\"echo -n no | ${this.androidHome()}/tools/bin/avdmanager create avd -n ${name} --package \\\"system-images;android-${api};${tag};${abi}\\\" --tag ${tag}\" ${additionalOptions}`)
         return new Emulator(this, name, api, abi, tag, this.portCounter++, this.portCounter++)
     }
 
@@ -133,11 +133,11 @@ export abstract class BaseAndroidSdk implements AndroidSDK {
     }
 
     async listEmulators(): Promise<any> {
-        await execWithResult(`${this.emulatorCmd()} -list-avds`)
+        await execIgnoreFailure(`${this.emulatorCmd()} -list-avds`)
     }
 
     async listRunningEmulators(): Promise<Array<Emulator>> {
-        let output = await execWithResult(`${this.androidHome()}/platform-tools/adb devices`)
+        let output = await execIgnoreFailure(`${this.androidHome()}/platform-tools/adb devices`)
         return await this.parseDevicesOutput(output);
     }
 
@@ -150,7 +150,7 @@ export abstract class BaseAndroidSdk implements AndroidSDK {
                 let split = line.split(" ");
                 let serial = split[0];
                 let port = serial.split("-")[1]
-                let nameOutput = await execWithResult(`${this.androidHome()}/platform-tools/adb adb -s ${serial} emu avd name`)
+                let nameOutput = await execIgnoreFailure(`${this.androidHome()}/platform-tools/adb adb -s ${serial} emu avd name`)
                 let nameLines = nameOutput.split(/\r?\n/);
                 let name = nameLines[0];
 
@@ -161,7 +161,7 @@ export abstract class BaseAndroidSdk implements AndroidSDK {
     }
 
     async startAdbServer(): Promise<any> {
-        await execWithResult(`${this.androidHome()}/platform-tools/adb start-server`)
+        await execIgnoreFailure(`${this.androidHome()}/platform-tools/adb start-server`)
     }
 }
 

@@ -21,4 +21,4 @@ jobs:
         api: 25
         tag: default
         abi: x86
-        cmd: adb shell getprop
+        cmd: adb blahblahtestfailed

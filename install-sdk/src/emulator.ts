@@ -1,4 +1,4 @@
-import execWithResult from "./exec-with-result";
+import execWithResult, {execIgnoreFailure} from "./exec-with-result";
 import {AndroidSDK} from "./sdk";
 
 export class Emulator {
@@ -27,14 +27,14 @@ export class Emulator {
     }
 
     async start(cmdOptions: String): Promise<Boolean> {
-        await execWithResult(`bash -c \\\"${this.sdk.emulatorCmd()} @${this.name} ${cmdOptions} &\"`)
+        await execIgnoreFailure(`bash -c \\\"${this.sdk.emulatorCmd()} @${this.name} ${cmdOptions} &\"`)
         let booted = await this.waitForBoot();
         console.log(`booted=${booted}`)
         return booted
     }
 
     async stop(): Promise<any> {
-        await execWithResult(`bash -c \\\"${this.sdk.androidHome()}/platform-tools/adb -s emulator-${this.adbPort} emu kill\"`)
+        await execIgnoreFailure(`bash -c \\\"${this.sdk.androidHome()}/platform-tools/adb -s emulator-${this.adbPort} emu kill\"`)
         console.log("emu kill finished")
         return
     }
@@ -79,8 +79,8 @@ export class Emulator {
         }
     }
 
-    async execAdbCommand(args: String): Promise<String> {
-        return await execWithResult(`${this.sdk.androidHome()}/platform-tools/adb -s emulator-${this.adbPort} ${args}`)
+    async execAdbCommand(args: String): Promise<string> {
+        return await execIgnoreFailure(`${this.sdk.androidHome()}/platform-tools/adb -s emulator-${this.adbPort} ${args}`)
     }
 }
 
