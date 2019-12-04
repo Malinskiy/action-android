@@ -90,7 +90,7 @@ async function run() {
                     core.setFailed(`process exited with code ${code}`)
                 }
             } catch (e) {
-                //ignore
+                core.setFailed(e.message)
             }
 
             console.log("stopping emulator")
