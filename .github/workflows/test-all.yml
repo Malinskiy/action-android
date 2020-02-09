@@ -22,3 +22,7 @@ jobs:
         tag: default
         abi: x86
         cmd: adb shell getprop
+    - uses: actions/upload-artifact@v1
+      with:
+        name: logcat
+        path: /tmp/logcat.log

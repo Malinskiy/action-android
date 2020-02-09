@@ -81,6 +81,7 @@ async function run() {
             if (disableAnimations) {
                 await emulator.disableAnimations()
             }
+            await emulator.startLogcat()
 
             console.log("emulator started and booted")
             try {
@@ -95,6 +96,7 @@ async function run() {
 
             console.log("stopping emulator")
             await emulator.stop()
+            await emulator.stopLogcat()
             console.log("emulator is stopped")
         } catch (error) {
             console.error(error)

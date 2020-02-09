@@ -82,6 +82,24 @@ export class Emulator {
     async execAdbCommand(args: String): Promise<string> {
         return await execIgnoreFailure(`${this.sdk.androidHome()}/platform-tools/adb -s emulator-${this.adbPort} ${args}`)
     }
+
+    async startLogcat(): Promise<any> {
+        console.log('Starting logcat read process');
+        try {
+            await execIgnoreFailure(`${this.sdk.androidHome()}/platform-tools/adb -s emulator-${this.adbPort} logcat > /tmp/logcat.log &`)
+        } catch (e) {
+            console.warn("can't start logcat read process. skipping")
+        }
+    }
+
+    async stopLogcat(): Promise<any> {
+        console.log('Stopping logcat read process');
+        try {
+            await execIgnoreFailure(`kill $(jobs -p)`)
+        } catch (e) {
+            console.warn("can't stop logcat read process. skipping")
+        }
+    }
 }
 
 function sleep(ms) {
