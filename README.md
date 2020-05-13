@@ -53,6 +53,18 @@ steps:
 - `disableAnimations` to disable animations using the system preferences. `false` by default. Keep in mind that applications might not respect system settings and these might have no effect at all 
 - `verbose` if you want to enable additional logging for this action
 
+### Artifacts
+The `emulator-run-cmd` action will generate an `artifacts/logcat.log` artifact that you can use in your builds to investigate issues. For example the next snippet will save the artifact in case the previous steps had failures (your tests failed and you need these logs for investigation).
+
+```yaml
+- name: Save logcat output
+  uses: actions/upload-artifact@master
+  if: failure()
+  with:
+    name: logcat
+    path: artifacts/logcat.log
+```
+
 ### Info about emulator-start and emulator-stop actions
 Currently GitHub Actions do not support OS processes that outlive the specific step hence you can't really do a 
 workflow that starts the emulator and then execute your testing command in a separate step. This is the reason why
