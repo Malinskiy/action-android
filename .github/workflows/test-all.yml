@@ -25,4 +25,4 @@ jobs:
     - uses: actions/upload-artifact@v1
       with:
         name: logcat
-        path: /tmp/logcat.log
+        path: artifacts/logcat.log
