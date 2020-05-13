@@ -86,6 +86,7 @@ export class Emulator {
     async startLogcat(): Promise<any> {
         console.log('Starting logcat read process');
         try {
+            await execIgnoreFailure(`mkdir -p artifacts`)
             await execIgnoreFailure(`bash -c \\\"${this.sdk.androidHome()}/platform-tools/adb -s emulator-${this.adbPort} logcat -v long > artifacts/logcat.log &\"`)
         } catch (e) {
             console.warn("can't start logcat read process. skipping")
