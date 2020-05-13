@@ -40,7 +40,7 @@ export class Emulator {
     }
 
     async waitForBoot(): Promise<boolean> {
-        for (let countdown = 120; countdown > 0; countdown--) {
+        for (let countdown = 300; countdown > 0; countdown--) {
             if (countdown == 0) {
                 console.error("Timeout waiting for the emulator")
                 return false
