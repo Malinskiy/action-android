@@ -73,6 +73,7 @@ async function run() {
             let booted = await emulator.start(cmdOptions);
             if (!booted) {
                 core.setFailed("emulator boot failed")
+                await emulator.stop()
                 return
             }
 
