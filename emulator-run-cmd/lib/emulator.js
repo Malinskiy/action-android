@@ -88,6 +88,7 @@ class Emulator {
         return __awaiter(this, void 0, void 0, function* () {
             console.log('Starting logcat read process');
             try {
+                yield exec_with_result_1.execIgnoreFailure(`mkdir -p artifacts`);
                 yield exec_with_result_1.execIgnoreFailure(`bash -c \\\"${this.sdk.androidHome()}/platform-tools/adb -s emulator-${this.adbPort} logcat -v long > artifacts/logcat.log &\"`);
             }
             catch (e) {
