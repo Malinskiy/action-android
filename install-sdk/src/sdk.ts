@@ -67,13 +67,13 @@ export abstract class BaseAndroidSdk implements AndroidSDK {
 
         let PATH_WITHOUT_ANDROID = PATH.split(':').filter(entry => {
             !entry.includes("Android")
-        })
+        }).join(':')
 
-        await execIgnoreFailure(`echo $PATH`)
+        await execIgnoreFailure(`echo "${process.env.PATH!!}"`)
 
         core.exportVariable('PATH', `${PATH_WITHOUT_ANDROID}:${extraPaths}`)
 
-        await execIgnoreFailure(`echo $PATH`)
+        await execIgnoreFailure(`echo "${process.env.PATH!!}"`)
 
         return true
     }
