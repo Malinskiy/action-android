@@ -69,7 +69,12 @@ export abstract class BaseAndroidSdk implements AndroidSDK {
             !entry.includes("Android")
         })
 
+        await execIgnoreFailure(`echo $PATH`)
+
         core.exportVariable('PATH', `${PATH_WITHOUT_ANDROID}:${extraPaths}`)
+
+        await execIgnoreFailure(`echo $PATH`)
+
         return true
     }
 
