@@ -3,7 +3,7 @@ on: [push, pull_request]
 jobs:
   instrumentationJob:
     name: Run Instrumentation Tests
-    runs-on: ubuntu-18.04
+    runs-on: macOS-10.15
     steps:
       - uses: actions/checkout@v1
       - name: set up JDK 1.8
