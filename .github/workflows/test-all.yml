@@ -11,6 +11,7 @@ jobs:
         with:
           java-version: 1.8
       - uses: malinskiy/action-android/install-sdk@release/0.0.6
+      - run: echo "$PATH"
       - run: sdkmanager platform-tools
       - run: adb devices
       - run: echo $ANDROID_HOME
