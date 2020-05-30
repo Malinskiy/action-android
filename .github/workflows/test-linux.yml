@@ -1,4 +1,4 @@
-name: "Test actions in a simple workflow"
+name: "Test Linux"
 on: [push, pull_request]
 jobs:
   test:
