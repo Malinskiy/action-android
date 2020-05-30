@@ -69,7 +69,7 @@ export abstract class BaseAndroidSdk implements AndroidSDK {
             return !entry.includes("Android")
         }).join(':')
 
-        core.exportVariable('PATH', `${PATH_WITHOUT_ANDROID}:${extraPaths}`)
+        core.exportVariable('PATH', `${extraPaths}:${PATH_WITHOUT_ANDROID}`)
         return true
     }
 
