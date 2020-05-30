@@ -4,7 +4,7 @@ This is a collection of GitHub Actions for Android development
 
 # Requirements
 
-This is only tested with **macOS-10.14** environment. It might work on linux but there is no support for kvm there so don't expect to have api 26+ available there.
+This is only tested with **macOS-10.15** environment. It might work on linux but there is no support for kvm there so don't expect to have api 26+ available there.
 
 ## Android SDK
 This repo provides an action for installing the Android SDK on the build agent. It will override whatever setup is 
@@ -29,7 +29,7 @@ I suggest to use `./gradlew` to minimize the dependency on environment setup.
 `action-android/emulator-run-cmd` provide an action which installs the emulator packages, starts the emulator and waits
 until it's booted. After this it will execute the provided cmd and stop the running emulator.
 
-It's imperative(!) to use `runs-on: macOS-10.14` if you want to have hardware acceleration for your emulator.
+It's imperative(!) to use `runs-on: macOS-10.15` if you want to have hardware acceleration for your emulator.
 
 ### Usage
 

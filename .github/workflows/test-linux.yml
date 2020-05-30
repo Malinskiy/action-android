@@ -2,10 +2,7 @@ name: "Test actions in a simple workflow"
 on: [push, pull_request]
 jobs:
   test:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [macOS-10.14, macOS-latest, ubuntu-18.04]
+    runs-on: ubuntu-18.04
     steps:
     - uses: actions/checkout@v1
     - name: test install-sdk
@@ -18,13 +15,3 @@ jobs:
       name: install sdk
     - run: sdkmanager platform-tools
     - run: adb devices
-    - uses: ./emulator-run-cmd
-      with:
-        api: 25
-        tag: default
-        abi: x86
-        cmd: adb shell getprop
-    - uses: actions/upload-artifact@v1
-      with:
-        name: logcat
-        path: artifacts/logcat.log
