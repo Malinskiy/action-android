@@ -3,7 +3,7 @@ on: [push, pull_request]
 jobs:
   instrumentationJob:
     name: Run Instrumentation Tests
-    runs-on: macOS-10.15
+    runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v1
       - name: set up JDK 1.8
@@ -11,6 +11,7 @@ jobs:
         with:
           java-version: 1.8
       - uses: malinskiy/action-android/install-sdk@release/0.0.6
+      - run: sdkmanager platform-tools
       - run: adb devices
       - run: echo $ANDROID_HOME
       - uses: malinskiy/action-android/emulator-run-cmd@release/0.0.6
