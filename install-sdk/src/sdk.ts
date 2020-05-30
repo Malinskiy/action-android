@@ -66,9 +66,11 @@ export abstract class BaseAndroidSdk implements AndroidSDK {
         let extraPaths = `${ANDROID_HOME}/bin:${ANDROID_HOME}/tools:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/platform-tools/bin`
 
         let PATH_WITHOUT_ANDROID = PATH.split(':').filter(entry => {
-            console.log(`filtering entry ${entry}`)
-            !entry.includes("Android")
+            console.log(`filtering entry ${entry}: ${!entry.includes("Android")}`)
+            return !entry.includes("Android")
         }).join(':')
+
+        console.log(`${PATH_WITHOUT_ANDROID}`)
 
         await execIgnoreFailure(`echo "${process.env.PATH!!}"`)
 
