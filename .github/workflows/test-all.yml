@@ -16,6 +16,7 @@ jobs:
       working-directory: emulator-run-cmd
     - uses: ./install-sdk
       name: install sdk
+    - run: sdkmanager platform-tools
     - run: adb devices
     - uses: ./emulator-run-cmd
       with:
