@@ -16,7 +16,8 @@ jobs:
       - uses: ./install-sdk
         name: install sdk
       - run: echo "$PATH"
-      - run: sdkmanager platform-tools
+      - run: sdkmanager "platform-tools"
+      - run: ls $ANDROID_HOME/platform-tools
       - run: adb devices
       - run: echo $ANDROID_HOME
       - uses: malinskiy/action-android/emulator-run-cmd@release/0.0.6
