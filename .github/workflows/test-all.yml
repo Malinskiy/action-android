@@ -10,7 +10,11 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 1.8
-      - uses: malinskiy/action-android/install-sdk@release/0.0.6
+      - name: test install-sdk
+        run: npm config delete prefix && source ~/.nvm/nvm.sh && nvm install v12.10.0 && npm install && npm ci && npm run build
+        working-directory: install-sdk
+      - uses: ./install-sdk
+        name: install sdk
       - run: echo "$PATH"
       - run: sdkmanager platform-tools
       - run: adb devices
