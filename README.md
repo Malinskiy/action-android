@@ -16,7 +16,7 @@ so they're immutable.
 ```yaml
 steps:
   - uses: actions/checkout@v1
-  - uses: malinskiy/action-android/install-sdk@release/0.0.6
+  - uses: malinskiy/action-android/install-sdk@release/0.0.7
   - run: adb devices
   - run: echo $ANDROID_HOME
 ```
@@ -36,8 +36,7 @@ It's imperative(!) to use `runs-on: macOS-10.15` if you want to have hardware ac
 ```yaml
 steps:
   - uses: actions/checkout@v1
-  - uses: malinskiy/action-android/emulator-run-cmd@release/0.0.6
-  
+  - uses: malinskiy/action-android/emulator-run-cmd@release/0.0.7
     with:
       cmd: ./gradlew integrationTest
       api: 25
@@ -76,7 +75,7 @@ I've written the combined `emulator-run-cmd` action. If you have multiple comman
 ```
 MIT License
 
-Copyright (c) 2019 Anton Malinskiy
+Copyright (c) 2020 Anton Malinskiy
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
