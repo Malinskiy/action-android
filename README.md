@@ -16,8 +16,17 @@ so they're immutable.
 ```yaml
 steps:
   - uses: actions/checkout@v1
+
+  # Download & install the Android SDK.
   - uses: malinskiy/action-android/install-sdk@release/0.0.7
+
+  # Set up platform tools like adb.
+  - run: sdkmanager platform-tools
+
+  # Start ADB (and verify that pathing is working correctly).
   - run: adb devices
+
+  # Verify $ANDROID_HOME is properly set for later Gradle commands.
   - run: echo $ANDROID_HOME
 ```
 
