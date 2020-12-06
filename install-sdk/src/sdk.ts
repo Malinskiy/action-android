@@ -55,6 +55,10 @@ export abstract class BaseAndroidSdk implements AndroidSDK {
 
         await execWithResult(`curl -L ${sdkUrl} -o ${ANDROID_TMP_PATH} -s`)
         await execWithResult(`unzip -q ${ANDROID_TMP_PATH} -d ${ANDROID_HOME}`)
+        await execWithResult(`mv ${ANDROID_HOME}/cmdline-tools ${ANDROID_HOME}/cmdline-tools-tmp`)
+        await execWithResult(`mkdir -p ${ANDROID_HOME}/cmdline-tools`)
+        await execWithResult(`mv ${ANDROID_HOME}/cmdline-tools-tmp ${ANDROID_HOME}/cmdline-tools/bootstrap-version`)
+
         await execWithResult(`rm ${ANDROID_TMP_PATH}`)
         await execWithResult(`mkdir -p ${ANDROID_HOME}/sdk_home`)
 
@@ -63,7 +67,7 @@ export abstract class BaseAndroidSdk implements AndroidSDK {
         core.exportVariable('ANDROID_SDK_HOME', `${ANDROID_HOME}/sdk_home`);
 
         const PATH = process.env.PATH!!
-        let extraPaths = `${ANDROID_HOME}/bin:${ANDROID_HOME}/tools:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/platform-tools:${ANDROID_HOME}/platform-tools/bin`
+        let extraPaths = `${ANDROID_HOME}/cmdline-tools/latest/bin:${ANDROID_HOME}/cmdline-tools/bootstrap-version/bin:${ANDROID_HOME}/bin:${ANDROID_HOME}/platform-tools:${ANDROID_HOME}/platform-tools/bin`
 
         let PATH_WITHOUT_ANDROID = PATH.split(':').filter(entry => {
             return !entry.includes("Android")
@@ -101,7 +105,7 @@ export abstract class BaseAndroidSdk implements AndroidSDK {
             args += " > /dev/null"
         }
 
-        await execIgnoreFailure(`bash -c \\\"${this.androidHome()}/tools/bin/sdkmanager emulator tools platform-tools 'system-images;android-${api};${tag};${abi}'${args}"`);
+        await execIgnoreFailure(`bash -c \\\"${this.androidHome()}/cmdline-tools/bootstrap-version/bin/sdkmanager emulator tools platform-tools 'system-images;android-${api};${tag};${abi}'${args}"`);
     }
 
     async installPlatform(api: string, verbose: boolean): Promise<any> {
@@ -110,7 +114,7 @@ export abstract class BaseAndroidSdk implements AndroidSDK {
             args += " > /dev/null"
         }
 
-        await execIgnoreFailure(`bash -c \\\"${this.androidHome()}/tools/bin/sdkmanager 'platforms;android-${api}'${args}"`)
+        await execIgnoreFailure(`bash -c \\\"${this.androidHome()}/cmdline-tools/bootstrap-version/bin/sdkmanager 'platforms;android-${api}'${args}"`)
     }
 
     async createEmulator(name: string, api: string, tag: string, abi: string, hardwareProfile: string): Promise<any> {
@@ -119,7 +123,7 @@ export abstract class BaseAndroidSdk implements AndroidSDK {
             additionalOptions += `--device ${hardwareProfile}`
         }
 
-        await execIgnoreFailure(`bash -c \\\"echo -n no | ${this.androidHome()}/tools/bin/avdmanager create avd -n ${name} --package \\\"system-images;android-${api};${tag};${abi}\\\" --tag ${tag}\" ${additionalOptions}`)
+        await execIgnoreFailure(`bash -c \\\"echo -n no | ${this.androidHome()}/cmdline-tools/bootstrap-version/bin/avdmanager create avd -n ${name} --package \\\"system-images;android-${api};${tag};${abi}\\\" --tag ${tag}\" ${additionalOptions}`)
         return new Emulator(this, name, api, abi, tag, this.portCounter++, this.portCounter++)
     }
 
@@ -166,11 +170,11 @@ export abstract class BaseAndroidSdk implements AndroidSDK {
 }
 
 class LinuxAndroidSdk extends BaseAndroidSdk {
-    defaultSdkUrl = "https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip"
+    defaultSdkUrl = "https://dl.google.com/android/repository/commandlinetools-linux-6858069_latest.zip"
 }
 
 class MacOSAndroidSdk extends BaseAndroidSdk {
-    defaultSdkUrl = "https://dl.google.com/android/repository/sdk-tools-darwin-4333796.zip"
+    defaultSdkUrl = "https://dl.google.com/android/repository/commandlinetools-mac-6858069_latest.zip"
 }
 
 export class SdkFactory {
