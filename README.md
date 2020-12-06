@@ -18,7 +18,7 @@ steps:
   - uses: actions/checkout@v1
 
   # Download & install the Android SDK.
-  - uses: malinskiy/action-android/install-sdk@release/0.0.9
+  - uses: malinskiy/action-android/install-sdk@release/0.1.0
 
   # Set up platform tools like adb.
   - run: sdkmanager platform-tools
@@ -45,7 +45,7 @@ It's imperative(!) to use `runs-on: macOS-10.15` if you want to have hardware ac
 ```yaml
 steps:
   - uses: actions/checkout@v1
-  - uses: malinskiy/action-android/emulator-run-cmd@release/0.0.9
+  - uses: malinskiy/action-android/emulator-run-cmd@release/0.1.0
     with:
       cmd: ./gradlew integrationTest
       api: 25
