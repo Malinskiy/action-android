@@ -51,7 +51,7 @@ async function run() {
 
         let bootTimeout = core.getInput('bootTimeout')
         if (bootTimeout == null) {
-            bootTimeout = 600
+            bootTimeout = '600'
         }
 
         console.log(`Starting emulator with API=${api}, TAG=${tag} and ABI=${abi}...`)
@@ -75,7 +75,7 @@ async function run() {
             let emulator = await sdk.createEmulator("emulator", api, tag, abi, hardwareProfile);
             console.log("starting adb server")
             await sdk.startAdbServer()
-            let booted = await emulator.start(cmdOptions, bootTimeout);
+            let booted = await emulator.start(cmdOptions, +bootTimeout);
             if (!booted) {
                 core.setFailed("emulator boot failed")
                 await emulator.stop()
