@@ -26,9 +26,9 @@ export class Emulator {
         this.telnetPort = telnetPort;
     }
 
-    async start(cmdOptions: String): Promise<Boolean> {
+    async start(cmdOptions: String, bootTimeout: number): Promise<Boolean> {
         await execIgnoreFailure(`bash -c \\\"${this.sdk.emulatorCmd()} @${this.name} ${cmdOptions} &\"`)
-        let booted = await this.waitForBoot();
+        let booted = await this.waitForBoot(bootTimeout);
         console.log(`booted=${booted}`)
         return booted
     }
@@ -39,8 +39,8 @@ export class Emulator {
         return
     }
 
-    async waitForBoot(): Promise<boolean> {
-        for (let countdown = 300; countdown > 0; countdown--) {
+    async waitForBoot(timeout: number): Promise<boolean> {
+        for (let countdown = timeout; countdown > 0; countdown--) {
             if (countdown == 0) {
                 console.error("Timeout waiting for the emulator")
                 return false
