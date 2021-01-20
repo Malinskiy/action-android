@@ -23,6 +23,9 @@ inputs:
   hardwareProfile:
     description: 'device profile to use. see avdmanager list for possible options'
     default: ''
+  bootTimeout:
+    description: 'Boot emulator timeout (seconds)'
+    default: '600'
   verbose:
     description: 'be verbose'
     default: 'false'

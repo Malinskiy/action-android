@@ -60,6 +60,7 @@ steps:
 - `hardwareProfile` is the hardware profile of the emulator. Check the `avdmanager list` for supported value. I advise to use string names instead of ids since those might change between sdk updates
 - `cmdOptions` is value which you can use to pass additional arguments to the emulator start command. By default this is `-no-snapshot-save -noaudio -no-boot-anim`
 - `disableAnimations` to disable animations using the system preferences. `false` by default. Keep in mind that applications might not respect system settings and these might have no effect at all 
+- `bootTimeout` is the emulator boot timeout (default is 600 seconds = 10 minutes)
 - `verbose` if you want to enable additional logging for this action
 
 ### Artifacts
