@@ -20,7 +20,7 @@ async function run() {
         let tag = core.getInput('tag', <InputOptions>{required: false})
         if (tag !== "default" && tag !== "google_apis") {
             console.log(`Unknown tag ${tag}. Using default`)
-            tag = 'google_apis'
+            tag = 'default'
         }
 
         let verbose = false
