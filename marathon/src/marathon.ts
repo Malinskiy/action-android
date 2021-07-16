@@ -9,6 +9,8 @@ export class Marathon {
     }
 
     async install(): Promise<Boolean> {
+        //Remove previous installation if the agent is long-lived
+        await execIgnoreFailure(`rm -r /tmp/marathon || true`)
         await execIgnoreFailure(`curl -L -o /tmp/marathon.zip ${this.url}`)
         await execIgnoreFailure(`unzip /tmp/marathon.zip -d /tmp/`)
         await execIgnoreFailure(`mv /tmp/marathon-* /tmp/marathon`)
