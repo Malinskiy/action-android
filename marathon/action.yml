@@ -1,0 +1,37 @@
+name: 'GitHub Action to execute Android tests using Marathon test runner'
+description: 'Starts Android emulator via existing Android SDK installation and executes instrumentation tests using Marathon test runner'
+author: 'Malinskiy'
+inputs:
+  api:
+    description: 'api version of the emulator'
+    default: '25'
+  abi:
+    description: 'abi of the emulator'
+    default: 'x86'
+  tag:
+    description: 'default or google_apis'
+    default: 'default'
+  marathonUrl:
+    description: 'url to the marathon distribution zip'
+    default: 'https://github.com/MarathonLabs/marathon/releases/download/0.6.2/marathon-0.6.2.zip'
+  marathonfile:
+    description: 'path to Marathonfile'
+    default: ''
+  disableAnimations:
+    description: ''
+    default: 'false'
+  cmdOptions:
+    description: 'additional emulator options passed to the emulator start cmd'
+    default: '-no-snapshot-save -noaudio -no-boot-anim'
+  hardwareProfile:
+    description: 'device profile to use. see avdmanager list for possible options'
+    default: ''
+  bootTimeout:
+    description: 'Boot emulator timeout (seconds)'
+    default: '600'
+  verbose:
+    description: 'be verbose'
+    default: 'false'
+runs:
+  using: 'node12'
+  main: 'lib/main.js'

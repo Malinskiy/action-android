@@ -1,0 +1,28 @@
+name: "Test marathon"
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: macOS-10.15
+    steps:
+      - uses: actions/checkout@v1
+      - name: test install-sdk
+        run: npm config delete prefix && source ~/.nvm/nvm.sh && nvm install v12.10.0 && npm install && npm ci && npm run build
+        working-directory: install-sdk
+      - name: test marathon
+        run: npm config delete prefix && source ~/.nvm/nvm.sh && nvm install v12.10.0 && npm install && npm ci && npm run build
+        working-directory: marathon
+      - uses: ./install-sdk
+        name: install sdk
+      - run: sdkmanager platform-tools
+      - run: adb devices
+      - uses: ./marathon
+        with:
+          api: 30
+          tag: default
+          abi: x86
+          marathonfile: marathon/Marathonfile
+          bootTimeout: 500
+      - uses: actions/upload-artifact@v1
+        with:
+          name: logcat
+          path: artifacts/marathon
