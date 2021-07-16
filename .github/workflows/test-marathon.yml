@@ -23,6 +23,7 @@ jobs:
           marathonfile: marathon/Marathonfile
           bootTimeout: 500
       - uses: actions/upload-artifact@v1
+        if: ${{ always() }}
         with:
           name: logcat
           path: artifacts/marathon
