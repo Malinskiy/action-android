@@ -11,7 +11,7 @@ export class Marathon {
     async install(): Promise<Boolean> {
         await execIgnoreFailure(`curl -L -o /tmp/marathon.zip ${this.url}`)
         await execIgnoreFailure(`unzip /tmp/marathon.zip -d /tmp/`)
-        await execIgnoreFailure(`mv /tmp/marathon-* -d /tmp/marathon`)
+        await execIgnoreFailure(`mv /tmp/marathon-* /tmp/marathon`)
 
         const PATH = process.env.PATH!!
         let extraPaths = `/tmp/marathon/bin`
