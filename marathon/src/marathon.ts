@@ -1,4 +1,4 @@
-import execWithResult, {execIgnoreFailure} from "./exec-with-result";
+import execWithResult, {execIgnoreFailure, Result} from "./exec-with-result";
 import * as core from "@actions/core";
 
 export class Marathon {
@@ -20,5 +20,15 @@ export class Marathon {
         console.log(`Marathon installed:`)
         console.log(await execIgnoreFailure(`marathon --help`))
         return true
+    }
+
+    async run(marathonfile: string): Promise<Result> {
+        let args = ""
+        if(marathonfile === "") {
+            args = ""
+        } else {
+            args = ` -m ${marathonfile}`
+        }
+        return await execWithResult(`/tmp/marathon/bin/marathon${args}`);
     }
 }

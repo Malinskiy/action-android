@@ -98,13 +98,7 @@ async function run() {
 
             console.log("emulator started and booted")
             try {
-                let args = ""
-                if(marathonfile === "") {
-                    args = ""
-                } else {
-                    args = ` -m ${marathonfile}`
-                }
-                let result = await execWithResult(`marathon${args}`);
+                let result = await marathon.run(marathonfile)
                 let code = result.exitCode;
                 if (code != 0) {
                     core.setFailed(`process exited with code ${code}`)
