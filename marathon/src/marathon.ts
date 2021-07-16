@@ -20,7 +20,7 @@ export class Marathon {
         core.exportVariable('PATH', `${extraPaths}:${PATH}`)
 
         console.log(`Marathon installed:`)
-        console.log(await execIgnoreFailure(`marathon --help`))
+        await execIgnoreFailure(`marathon --help`)
         return true
     }
 
