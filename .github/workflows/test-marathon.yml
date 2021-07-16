@@ -25,5 +25,5 @@ jobs:
       - uses: actions/upload-artifact@v1
         if: ${{ always() }}
         with:
-          name: logcat
+          name: marathon
           path: artifacts/marathon
