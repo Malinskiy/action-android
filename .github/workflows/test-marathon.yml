@@ -18,7 +18,7 @@ jobs:
       - uses: ./marathon
         with:
           api: 30
-          tag: default
+          tag: google_apis
           abi: x86
           marathonfile: marathon/Marathonfile
           bootTimeout: 500
