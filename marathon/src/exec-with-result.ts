@@ -23,6 +23,9 @@ export default async function execWithResult(commandLine: string, args?: string[
 
 export async function execIgnoreFailure(commandLine: string, args?: string[], options?: ExecOptions): Promise<string> {
   let result = await execWithResult(commandLine, args, options);
+  if(result.exitCode != 0) {
+    console.log(`${commandLine}: \nstderr: ${result.stderr}\nstdout: ${result.stdout}`)
+  }
   return result.stdout
 }
 

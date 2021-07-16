@@ -102,6 +102,7 @@ async function run() {
                 let code = result.exitCode;
                 if (code != 0) {
                     core.setFailed(`process exited with code ${code}`)
+                    core.error(`stdout: ${result.stdout}\nstderr: ${result.stderr}`)
                 }
             } catch (e) {
                 core.setFailed(e.message)
