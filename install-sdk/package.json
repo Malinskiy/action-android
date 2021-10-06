@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Malinskiy/action-android.git"
+    "url": "git@github.com:qapital/action-android.git"
   },
   "keywords": [
     "actions",

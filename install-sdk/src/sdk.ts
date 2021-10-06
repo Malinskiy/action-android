@@ -50,7 +50,8 @@ export abstract class BaseAndroidSdk implements AndroidSDK {
         }
 
         if (fs.existsSync(`${process.env.HOME}/.android`)) {
-            await execWithResult(`mv ${process.env.HOME}/.android ${process.env.HOME}/.android.backup`)
+            // await execWithResult(`mv ${process.env.HOME}/.android ${process.env.HOME}/.android.backup`)
+            return true
         }
 
         await execWithResult(`curl -L ${sdkUrl} -o ${ANDROID_TMP_PATH} -s`)
