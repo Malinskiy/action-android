@@ -93,3 +93,4 @@ typings/
 .dynamodb/
 
 lib
+.idea/
