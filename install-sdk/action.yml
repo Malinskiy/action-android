@@ -9,5 +9,5 @@ inputs:
     description: 'do you accept all current Android licenses?'
     default: 'yes'
 runs:
-  using: 'node12'
+  using: 'node16'
   main: 'lib/main.js'
