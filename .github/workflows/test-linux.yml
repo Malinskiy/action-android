@@ -1,5 +1,10 @@
 name: "Test Linux"
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
 jobs:
   test:
     runs-on: ubuntu-18.04

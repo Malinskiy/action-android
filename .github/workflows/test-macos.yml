@@ -1,5 +1,10 @@
 name: "Test macOS"
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
 jobs:
   test:
     runs-on: macOS-10.15
