@@ -53,7 +53,11 @@ export class Emulator {
                     return true
                 }
             } catch (e) {
-                console.error(e.message)
+                if (e instanceof Error) {
+                    console.error(e.message)
+                } else {
+                    console.error(e)
+                }
             }
 
             console.log("Sleeping for 1s")

@@ -97,7 +97,11 @@ async function run() {
                     core.setFailed(`process exited with code ${code}`)
                 }
             } catch (e) {
-                core.setFailed(e.message)
+                if(e !instanceof Error) {
+                    core.setFailed(e.message);
+                } else {
+                    core.setFailed("unknown (error !instanceof Error) occurred")
+                }
             }
 
             console.log("stopping emulator")
@@ -106,11 +110,20 @@ async function run() {
             console.log("emulator is stopped")
         } catch (error) {
             console.error(error)
-            core.setFailed(error.message);
+            if(error !instanceof Error) {
+                core.setFailed(error.message);
+            } else {
+                core.setFailed("unknown (error !instanceof Error) occurred")
+            }
             return
         }
     } catch (error) {
-        core.setFailed(error.message);
+        if(error !instanceof Error) {
+            core.setFailed(error.message);
+        } else {
+            core.setFailed("unknown (error !instanceof Error) occurred")
+        }
+
         return
     }
 }
