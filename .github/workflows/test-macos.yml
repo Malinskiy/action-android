@@ -2,7 +2,7 @@ name: "Test macOS"
 on: [push, pull_request]
 jobs:
   test:
-    runs-on: macOS-10.15
+    runs-on: macos-12
     steps:
     - uses: actions/checkout@v1
     - name: test install-sdk
