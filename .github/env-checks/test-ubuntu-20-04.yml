@@ -2,7 +2,7 @@ name: "Test hypervisor support on ubuntu"
 on: push
 jobs:
   test:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     steps:
       - run: cat /sys/hypervisor/properties/capabilities || true
         name: xen
