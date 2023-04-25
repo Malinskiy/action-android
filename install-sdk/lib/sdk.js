@@ -180,7 +180,7 @@ class LinuxAndroidSdk extends BaseAndroidSdk {
 class MacOSAndroidSdk extends BaseAndroidSdk {
     constructor() {
         super(...arguments);
-        this.defaultSdkUrl = "https://dl.google.com/android/repository/commandlinetools-mac-6858069_latest.zip";
+        this.defaultSdkUrl = "https://dl.google.com/android/repository/commandlinetools-mac-9477386_latest.zip";
     }
 }
 class SdkFactory {
