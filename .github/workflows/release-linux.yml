@@ -1,0 +1,39 @@
+name: "Release Linux"
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  release:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v1
+      - name: Prepare release
+        run: ./prepare-for-release.sh
+      - name: test install-sdk
+        run: npm config delete prefix && source ~/.nvm/nvm.sh && nvm install v12.10.0 && npm install && npm ci && npm run build
+        working-directory: install-sdk
+      - name: test emulator-run-cmd
+        run: npm config delete prefix && source ~/.nvm/nvm.sh && nvm install v12.10.0 && npm install && npm ci && npm run build
+        working-directory: emulator-run-cmd
+      - uses: ./install-sdk
+        name: install sdk
+
+      - run: sdkmanager platform-tools
+      - name: Find Tag
+        id: tagger
+        uses: jimschubert/query-tag-action@v2
+        with:
+          skip-unshallow: 'true'
+          abbrev: false
+          commit-ish: HEAD
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{steps.tagger.outputs.tag}}
+          name: ${{steps.tagger.outputs.tag}}
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
