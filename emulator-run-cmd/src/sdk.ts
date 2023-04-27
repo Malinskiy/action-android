@@ -123,7 +123,7 @@ export abstract class BaseAndroidSdk implements AndroidSDK {
             additionalOptions += `--device ${hardwareProfile}`
         }
 
-        await execIgnoreFailure(`bash -c \\\"echo -n no | ${this.androidHome()}/cmdline-tools/bootstrap-version/bin/avdmanager create avd -n ${name} --package \\\"system-images;android-${api};${tag};${abi}\\\" --tag ${tag}\" ${additionalOptions}`)
+        await execIgnoreFailure(`bash -c \\\"echo -n no | ${this.androidHome()}/cmdline-tools/bootstrap-version/bin/avdmanager create avd -n ${name} --force --package \\\"system-images;android-${api};${tag};${abi}\\\" --tag ${tag}\" ${additionalOptions}`)
         return new Emulator(this, name, api, abi, tag, this.portCounter++, this.portCounter++)
     }
 
