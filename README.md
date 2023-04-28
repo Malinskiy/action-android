@@ -1,6 +1,7 @@
 # action-android 
 
-This is a collection of GitHub Actions for Android development
+This is a collection of GitHub Actions for Android development.
+It's working on an Apple Silicon M1 custom runner with amazing fast espresso tests.
 
 # Requirements
 
@@ -18,7 +19,7 @@ steps:
   - uses: actions/checkout@v1
 
   # Download & install the Android SDK.
-  - uses: malinskiy/action-android/install-sdk@release/0.1.6
+  - uses: hannesa2/action-android/install-sdk@release/0.1.4.10
 
   # Set up platform tools like adb.
   - run: sdkmanager platform-tools
@@ -54,7 +55,7 @@ It's imperative(!) to use `runs-on: ubuntu-latest` with KVM enabled or `runs-on:
 ```yaml
 steps:
   - uses: actions/checkout@v1
-  - uses: malinskiy/action-android/emulator-run-cmd@release/0.1.6
+  - uses: hannesa2/action-android/emulator-run-cmd@release/0.1.4.10
     with:
       cmd: ./gradlew integrationTest
       api: 25
