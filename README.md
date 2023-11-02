@@ -1,4 +1,4 @@
-# action-android 
+# action-android for Apple silicon M1
 
 This is a collection of GitHub Actions for Android development.
 It's working on an Apple Silicon M1 custom runner with amazing fast espresso tests.
