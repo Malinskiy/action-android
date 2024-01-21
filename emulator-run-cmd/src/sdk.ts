@@ -105,7 +105,7 @@ export abstract class BaseAndroidSdk implements AndroidSDK {
             args += " > /dev/null"
         }
 
-        await execIgnoreFailure(`bash -c \\\"${this.androidHome()}/cmdline-tools/bootstrap-version/bin/sdkmanager emulator 'cmdline-tools;latest' platform-tools 'system-images;android-${api};${tag};${abi}'${args}"`);
+        await execIgnoreFailure(`bash -c \\\"${this.androidHome()}/cmdline-tools/latest/bin/sdkmanager emulator 'cmdline-tools;latest' platform-tools 'system-images;android-${api};${tag};${abi}'${args}"`);
     }
 
     async installPlatform(api: string, verbose: boolean): Promise<any> {
@@ -114,7 +114,7 @@ export abstract class BaseAndroidSdk implements AndroidSDK {
             args += " > /dev/null"
         }
 
-        await execIgnoreFailure(`bash -c \\\"${this.androidHome()}/cmdline-tools/bootstrap-version/bin/sdkmanager 'platforms;android-${api}'${args}"`)
+        await execIgnoreFailure(`bash -c \\\"${this.androidHome()}/cmdline-tools/latest/bin/sdkmanager 'platforms;android-${api}'${args}"`)
     }
 
     async createEmulator(name: string, api: string, tag: string, abi: string, hardwareProfile: string): Promise<any> {
@@ -123,7 +123,7 @@ export abstract class BaseAndroidSdk implements AndroidSDK {
             additionalOptions += `--device ${hardwareProfile}`
         }
 
-        await execIgnoreFailure(`bash -c \\\"echo -n no | ${this.androidHome()}/cmdline-tools/bootstrap-version/bin/avdmanager create avd -n ${name} --package \\\"system-images;android-${api};${tag};${abi}\\\" --tag ${tag}\" ${additionalOptions}`)
+        await execIgnoreFailure(`bash -c \\\"echo -n no | ${this.androidHome()}/cmdline-tools/latest/bin/avdmanager create avd -n ${name} --package \\\"system-images;android-${api};${tag};${abi}\\\" --tag ${tag}\" ${additionalOptions}`)
         return new Emulator(this, name, api, abi, tag, this.portCounter++, this.portCounter++)
     }
 
