@@ -78,7 +78,7 @@ export abstract class BaseAndroidSdk implements AndroidSDK {
     }
 
     androidHome(): string {
-        return `${process.env.HOME}/android-sdk`
+        return `${process.env.ANDROID_HOME}`
     }
 
     emulatorCmd(): string {
