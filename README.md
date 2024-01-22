@@ -4,7 +4,7 @@ This is a collection of GitHub Actions for Android development
 
 # Requirements
 
-This is only tested with **macOS-10.15** environment. It might work on linux but there is no support for kvm there so don't expect to have api 26+ available there.
+Tested with **macOS-12** and **ubuntu-latest** runner images. It might work using other runners (including self-hosted ones) but there is no support for them.
 
 ## Android SDK
 This repo provides an action for installing the Android SDK on the build agent. It will override whatever setup is 
@@ -18,7 +18,7 @@ steps:
   - uses: actions/checkout@v1
 
   # Download & install the Android SDK.
-  - uses: malinskiy/action-android/install-sdk@release/0.1.3
+  - uses: malinskiy/action-android/install-sdk@release/0.1.6
 
   # Set up platform tools like adb.
   - run: sdkmanager platform-tools
@@ -38,14 +38,23 @@ I suggest to use `./gradlew` to minimize the dependency on environment setup.
 `action-android/emulator-run-cmd` provide an action which installs the emulator packages, starts the emulator and waits
 until it's booted. After this it will execute the provided cmd and stop the running emulator.
 
-It's imperative(!) to use `runs-on: macOS-10.15` if you want to have hardware acceleration for your emulator.
+It's imperative(!) to use `runs-on: ubuntu-latest` with KVM enabled or `runs-on: macOS-12` if you want to have hardware acceleration for your emulator.
+
+### Enabling KVM for ubunut-latest
+```
+- name: Enable KVM
+  run: |
+    echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+    sudo udevadm control --reload-rules
+    sudo udevadm trigger --name-match=kvm
+```
 
 ### Usage
 
 ```yaml
 steps:
   - uses: actions/checkout@v1
-  - uses: malinskiy/action-android/emulator-run-cmd@release/0.1.3
+  - uses: malinskiy/action-android/emulator-run-cmd@release/0.1.6
     with:
       cmd: ./gradlew integrationTest
       api: 25
