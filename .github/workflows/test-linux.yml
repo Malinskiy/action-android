@@ -2,7 +2,7 @@ name: "Test Linux"
 on: [push, pull_request]
 jobs:
   test:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
     - name: test install-sdk
@@ -15,3 +15,19 @@ jobs:
       name: install sdk
     - run: sdkmanager platform-tools
     - run: adb devices
+    - name: Enable KVM
+      run: |
+        echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+        sudo udevadm control --reload-rules
+        sudo udevadm trigger --name-match=kvm
+    - uses: ./emulator-run-cmd
+      with:
+        api: 25
+        tag: default
+        abi: x86
+        cmd: adb shell getprop
+        bootTimeout: 500
+    - uses: actions/upload-artifact@v1
+      with:
+        name: logcat
+        path: artifacts/logcat.log
