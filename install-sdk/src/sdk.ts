@@ -171,11 +171,11 @@ export abstract class BaseAndroidSdk implements AndroidSDK {
 }
 
 class LinuxAndroidSdk extends BaseAndroidSdk {
-    defaultSdkUrl = "https://dl.google.com/android/repository/commandlinetools-linux-6858069_latest.zip"
+    defaultSdkUrl = "https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip"
 }
 
 class MacOSAndroidSdk extends BaseAndroidSdk {
-    defaultSdkUrl = "https://dl.google.com/android/repository/commandlinetools-mac-6858069_latest.zip"
+    defaultSdkUrl = "https://dl.google.com/android/repository/commandlinetools-mac-11076708_latest.zip"
 }
 
 export class SdkFactory {
