@@ -109,7 +109,7 @@ export abstract class BaseAndroidSdk implements AndroidSDK {
             args += " > /dev/null"
         }
 
-        await execIgnoreFailure(`bash -c \\\"${this.androidHome()}/cmdline-tools/bootstrap-version/bin/sdkmanager emulator platform-tools 'system-images;android-${api};${tag};${abi}'${args}"`);
+        await execIgnoreFailure(`bash -c \\\"${this.androidHome()}/cmdline-tools/bootstrap-version/bin/sdkmanager emulator 'cmdline-tools;latest' platform-tools 'system-images;android-${api};${tag};${abi}'${args}"`);
     }
 
     async installPlatform(api: string, verbose: boolean): Promise<any> {
