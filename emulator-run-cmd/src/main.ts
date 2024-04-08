@@ -51,7 +51,7 @@ async function run() {
 
         let bootTimeout = core.getInput('bootTimeout')
         if (bootTimeout == null) {
-            bootTimeout = '720'
+            bootTimeout = '840'
         }
 
         console.log(`Starting emulator with API=${api}, TAG=${tag} and ABI=${abi}...`)
