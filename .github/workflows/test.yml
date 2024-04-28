@@ -50,10 +50,10 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
       - name: test install-sdk
-        run: npm config delete prefix && source ~/.nvm/nvm.sh && nvm install v16.15.0 && npm install && npm ci && npm run build
+        run: npm config delete prefix && source ~/.nvm/nvm.sh && nvm install v20.12.1 && npm install && npm ci && npm run build
         working-directory: install-sdk
       - name: test emulator-run-cmd
-        run: npm config delete prefix && source ~/.nvm/nvm.sh && nvm install v16.15.0 && npm install && npm ci && npm run build
+        run: npm config delete prefix && source ~/.nvm/nvm.sh && nvm install v20.12.1 && npm install && npm ci && npm run build
         working-directory: emulator-run-cmd
       - uses: ./install-sdk
         name: install sdk
