@@ -1,0 +1,54 @@
+name: "Release MacOS"
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  release:
+    runs-on: macOS-12
+    strategy:
+      fail-fast: false
+      matrix:
+        directory: [ install-sdk, emulator-run-cmd ]
+    steps:
+      - uses: actions/checkout@v1
+      - name: Install Docker
+        run: |
+          brew install docker docker-compose colima
+          colima start
+          docker run hello-world
+      - name: Prepare release
+        run: ./prepare-for-release.sh
+      - name: test ${{ matrix.directory }}
+        run: |
+          set -x
+          npm config delete prefix
+          source ~/.nvm/nvm.sh
+          nvm install v20.12.1
+          sudo npm install
+          sudo npm ci
+          npm run build
+        working-directory: ${{ matrix.directory }}
+      - uses: ./install-sdk
+        name: install sdk
+      - name: check changes
+        run: git status
+
+      - run: sdkmanager platform-tools
+      - name: Find Tag
+        id: tagger
+        uses: jimschubert/query-tag-action@v2
+        with:
+          skip-unshallow: 'true'
+          abbrev: false
+          commit-ish: HEAD
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{steps.tagger.outputs.tag}}
+          name: ${{steps.tagger.outputs.tag}}
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
