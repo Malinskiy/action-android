@@ -13,7 +13,7 @@ jobs:
       matrix:
         directory: [ install-sdk, emulator-run-cmd ]
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v4
       - name: Install Docker
         run: |
           brew install docker docker-compose colima
