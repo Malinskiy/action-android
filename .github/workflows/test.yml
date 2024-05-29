@@ -31,6 +31,7 @@ jobs:
         tag: default
         abi: x86
         cmd: adb shell getprop
+        cmdOptions: -noaudio -no-boot-anim -no-window
         bootTimeout: 500
     - uses: actions/upload-artifact@v1
       with:
