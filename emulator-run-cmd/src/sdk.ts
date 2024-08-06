@@ -1,4 +1,3 @@
-import *
 import * as core from "@actions/core";
 import execWithResult, { execIgnoreFailure } from "./exec-with-result";
 import * as fs from "fs";
@@ -285,4 +284,3 @@ export class SdkFactory {
 async function writeLicenseFile(file: string, content: string) {
   await writeFileAsync(file, content);
 }
-
