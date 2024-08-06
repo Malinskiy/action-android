@@ -1,13 +1,16 @@
-name: 'Install Android SDK action'
-description: 'Install minimal Android SDK from url'
-author: 'Malinskiy'
+name: "Install Android SDK action"
+description: "Install minimal Android SDK from url"
+author: "Malinskiy"
 inputs:
   url:
-    description: 'url of Android SDK zip'
-    default: ''
+    description: "url of Android SDK zip"
+    default: ""
   acceptLicense:
-    description: 'do you accept all current Android licenses?'
-    default: 'yes'
+    description: "do you accept all current Android licenses?"
+    default: "yes"
+  cmdlineToolsVersion:
+    description: "version of cmdline-tools package to use"
+    default: "latest"
 runs:
-  using: 'node20'
-  main: 'lib/main.js'
+  using: "node20"
+  main: "lib/main.js"
